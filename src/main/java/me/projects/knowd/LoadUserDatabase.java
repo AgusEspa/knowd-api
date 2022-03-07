@@ -1,6 +1,6 @@
 package me.projects.knowd;
 
-import me.projects.knowd.repositories.ObjectiveRepository;
+import me.projects.knowd.repositories.SubjectRepository;
 import me.projects.knowd.repositories.UserEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -13,14 +13,14 @@ class LoadUserDatabase implements CommandLineRunner {
 
     private final UserEntityRepository userRepository;
 
-    private final ObjectiveRepository objectiveRepository;
+    private final SubjectRepository subjectRepository;
 
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
-    public LoadUserDatabase(UserEntityRepository userRepository, ObjectiveRepository objectiveRepository) {
+    public LoadUserDatabase(UserEntityRepository userRepository, SubjectRepository subjectRepository) {
         this.userRepository = userRepository;
-        this.objectiveRepository = objectiveRepository;
+        this.subjectRepository = subjectRepository;
     }
 
     @Override

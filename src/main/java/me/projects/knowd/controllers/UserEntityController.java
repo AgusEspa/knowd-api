@@ -32,18 +32,6 @@ public class UserEntityController {
         this.tokenService = tokenService;
     }
 
-    // Only with ROLE_ADMIN
-//    @GetMapping
-//    ResponseEntity<List> getAllUsers() {
-//        return ResponseEntity.ok(userService.all());
-//    }
-
-    // Only with ROLE_ADMIN
-//    @GetMapping("/{id}")
-//    ResponseEntity<UserEntity> getOneUser(@PathVariable Long id) {
-//        return ResponseEntity.ok(userService.one(id));
-//    }
-
     @GetMapping("/authenticated")
     ResponseEntity<UserCredentialsResponse> getUserData() {
         return ResponseEntity.ok(userEntityService.fetchUserData());

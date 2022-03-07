@@ -1,67 +1,47 @@
-package me.projects.knowd.entities;
+package me.projects.knowd.dtos.requests;
 
+import me.projects.knowd.exceptions.CustomMethodArgumentNotValidException;
 import me.projects.knowd.tools.Status;
 
-import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
-@Entity
-@Table(name = "subjects")
-public class Subject {
+public class SubjectRequest {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "subject_id")
-    private Long id;
-
-    @NotBlank
+    @NotBlank(message = "Title must not be empty")
     private String title;
 
-    @NotBlank
+    @NotBlank(message = "Field must not be empty")
     private String field;
 
-    @NotBlank
+    @NotBlank(message = "Area must not be empty")
     private String area;
 
-    @OneToMany(mappedBy = "subject", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Topic> topics = new HashSet<>();
-
-    @OneToMany(mappedBy = "subject", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Relation> relations = new HashSet<>();
-
     @NotNull
-    @Min(1)
-    @Max(10)
+    @Min(value = 1, message = "Number must be more than 0")
+    @Max(value = 10, message = "Number must be less or equal to 10")
     private int relevance;
 
     @NotNull
-    @Min(1)
-    @Max(100)
+    @Min(value = 1, message = "Number must be more than 0")
+    @Max(value = 100, message = "Number must be less or equal to 100")
     private int progress;
 
-    @NotNull
+    @NotNull(message = "Status must not be empty")
     private Status status;
 
     private boolean needsAttention;
 
     private LocalDate dueDate;
 
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
 
+    public SubjectRequest() {}
 
-    public Subject() {}
-
-    public Subject(String title, String field, String area, int relevance, int progress, Status status, boolean needsAttention, LocalDate dueDate, UserEntity user) {
+    public SubjectRequest(String title, String field, String area, int relevance, int progress, Status status, boolean needsAttention, String dueDate) {
         this.title = title;
         this.field = field;
         this.area = area;
@@ -69,18 +49,16 @@ public class Subject {
         this.progress = progress;
         this.status = status;
         this.needsAttention = needsAttention;
-        this.dueDate = dueDate;
-        this.user = user;
+        if (dueDate == null || dueDate.isEmpty()) {
+            this.dueDate = null;
+        } else {
+            try { this.dueDate = LocalDate.parse(dueDate); }
+            catch (Exception e) {
+                throw new CustomMethodArgumentNotValidException("Bad date format - must be yyyy-mm-dd");
+            }
+        }
     }
 
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getTitle() {
         return title;
@@ -104,14 +82,6 @@ public class Subject {
 
     public void setArea(String area) {
         this.area = area;
-    }
-
-    public Set<Topic> getTopics() {
-        return topics;
-    }
-
-    public Set<Relation> getRelations() {
-        return relations;
     }
 
     public int getRelevance() {
@@ -154,24 +124,17 @@ public class Subject {
         this.dueDate = dueDate;
     }
 
-    public UserEntity getUser() {
-        return user;
-    }
-
-    public void setUser(UserEntity user) {
-        this.user = user;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Subject subject = (Subject) o;
-        return Objects.equals(id, subject.id) && Objects.equals(title, subject.title) && Objects.equals(field, subject.field) && Objects.equals(area, subject.area);
+        SubjectRequest that = (SubjectRequest) o;
+        return Objects.equals(title, that.title) && Objects.equals(field, that.field) && Objects.equals(area, that.area);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, field, area);
+        return Objects.hash(title, field, area);
     }
 }

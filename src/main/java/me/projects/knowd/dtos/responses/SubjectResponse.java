@@ -1,5 +1,8 @@
-package me.projects.knowd.entities;
+package me.projects.knowd.dtos.responses;
 
+import me.projects.knowd.entities.Relation;
+import me.projects.knowd.entities.Topic;
+import me.projects.knowd.entities.UserEntity;
 import me.projects.knowd.tools.Status;
 
 import javax.persistence.*;
@@ -9,68 +12,49 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-@Entity
-@Table(name = "subjects")
-public class Subject {
+public class SubjectResponse {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "subject_id")
     private Long id;
 
-    @NotBlank
     private String title;
 
-    @NotBlank
     private String field;
 
-    @NotBlank
     private String area;
 
-    @OneToMany(mappedBy = "subject", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Topic> topics = new HashSet<>();
+    private Set<Topic> topics;
 
-    @OneToMany(mappedBy = "subject", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Relation> relations = new HashSet<>();
+    private Set<Relation> relations;
 
-    @NotNull
-    @Min(1)
-    @Max(10)
     private int relevance;
 
-    @NotNull
-    @Min(1)
-    @Max(100)
     private int progress;
 
-    @NotNull
     private Status status;
 
     private boolean needsAttention;
 
     private LocalDate dueDate;
 
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
 
+    public SubjectResponse() {}
 
-    public Subject() {}
-
-    public Subject(String title, String field, String area, int relevance, int progress, Status status, boolean needsAttention, LocalDate dueDate, UserEntity user) {
+    public SubjectResponse(Long id, String title, String field, String area, Set<Topic> topics, Set<Relation> relations, int relevance, int progress, Status status, boolean needsAttention, LocalDate dueDate) {
+        this.id = id;
         this.title = title;
         this.field = field;
         this.area = area;
+        this.topics = topics;
+        this.relations = relations;
         this.relevance = relevance;
         this.progress = progress;
         this.status = status;
         this.needsAttention = needsAttention;
         this.dueDate = dueDate;
-        this.user = user;
     }
 
 
@@ -110,8 +94,16 @@ public class Subject {
         return topics;
     }
 
+    public void setTopics(Set<Topic> topics) {
+        this.topics = topics;
+    }
+
     public Set<Relation> getRelations() {
         return relations;
+    }
+
+    public void setRelations(Set<Relation> relations) {
+        this.relations = relations;
     }
 
     public int getRelevance() {
@@ -154,20 +146,13 @@ public class Subject {
         this.dueDate = dueDate;
     }
 
-    public UserEntity getUser() {
-        return user;
-    }
-
-    public void setUser(UserEntity user) {
-        this.user = user;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Subject subject = (Subject) o;
-        return Objects.equals(id, subject.id) && Objects.equals(title, subject.title) && Objects.equals(field, subject.field) && Objects.equals(area, subject.area);
+        SubjectResponse that = (SubjectResponse) o;
+        return Objects.equals(id, that.id) && Objects.equals(title, that.title) && Objects.equals(field, that.field) && Objects.equals(area, that.area);
     }
 
     @Override

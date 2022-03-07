@@ -20,15 +20,22 @@ public class ExceptionsControllerAdvice {
                 .body(ex.getMessage());
     }
 
-    @ExceptionHandler(KeyResultNotFoundException.class)
-    ResponseEntity<String> handleKeyResultNotFoundException(KeyResultNotFoundException ex) {
+    @ExceptionHandler(TopicNotFoundException.class)
+    ResponseEntity<String> handleKeyResultNotFoundException(TopicNotFoundException ex) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(ex.getMessage());
     }
 
-    @ExceptionHandler(ObjectiveNotFoundException.class)
-    ResponseEntity<String> handleObjectiveNotFoundException(ObjectiveNotFoundException ex) {
+    @ExceptionHandler(RelationNotFoundException.class)
+    ResponseEntity<String> handleRelationNotFoundException(RelationNotFoundException ex) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(ex.getMessage());
+    }
+
+    @ExceptionHandler(SubjectNotFoundException.class)
+    ResponseEntity<String> handleSubjectNotFoundException(SubjectNotFoundException ex) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(ex.getMessage());

@@ -34,14 +34,20 @@ public class Topic {
     @JoinColumn(name = "subject_id")
     private Subject subject;
 
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+
 
     public Topic() {}
 
-    public Topic(String title, int progress, Status status, Subject subject) {
+    public Topic(String title, int progress, Status status, Subject subject, UserEntity user) {
         this.title = title;
         this.progress = progress;
         this.status = status;
         this.subject = subject;
+        this.user = user;
     }
 
 
@@ -85,6 +91,13 @@ public class Topic {
         this.subject = subject;
     }
 
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -22,12 +22,18 @@ public class Relation {
     @JoinColumn(name = "subject_id")
     private Subject subject;
 
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+
 
     public Relation() {}
 
-    public Relation(String title, Subject subject) {
+    public Relation(String title, Subject subject, UserEntity user) {
         this.title = title;
         this.subject = subject;
+        this.user = user;
     }
 
 
@@ -54,6 +60,15 @@ public class Relation {
     public void setSubject(Subject subject) {
         this.subject = subject;
     }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+
 
     @Override
     public boolean equals(Object o) {
