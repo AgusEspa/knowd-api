@@ -1,9 +1,7 @@
 package me.projects.knowd.dtos.requests;
 
-import me.projects.knowd.entities.Subject;
 import me.projects.knowd.tools.Status;
 
-import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;

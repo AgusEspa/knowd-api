@@ -27,10 +27,13 @@ public class UserEntity {
     private String password;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Objective> objectives = new HashSet<>();
+    private Set<Subject> subjects = new HashSet<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<KeyResult> keyResults = new HashSet<>();
+    private Set<Topic> topics = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Relation> relations = new HashSet<>();
 
 
     UserEntity() {}
@@ -74,20 +77,28 @@ public class UserEntity {
         this.password = password;
     }
 
-    public Set<Objective> getObjectives() {
-        return objectives;
+    public Set<Subject> getSubjects() {
+        return subjects;
     }
 
-    public void setObjectives(Set<Objective> objectives) {
-        this.objectives = objectives;
+    public void setSubjects(Set<Subject> subjects) {
+        this.subjects = subjects;
     }
 
-    public Set<KeyResult> getKeyResults() {
-        return keyResults;
+    public Set<Topic> getTopics() {
+        return topics;
     }
 
-    public void setKeyResults(Set<KeyResult> keyResults) {
-        this.keyResults = keyResults;
+    public void setTopics(Set<Topic> topics) {
+        this.topics = topics;
+    }
+
+    public Set<Relation> getRelations() {
+        return relations;
+    }
+
+    public void setRelations(Set<Relation> relations) {
+        this.relations = relations;
     }
 
     @Override
