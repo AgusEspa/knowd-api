@@ -1,20 +1,10 @@
 package me.projects.knowd.dtos.responses;
 
-import me.projects.knowd.entities.Relation;
-import me.projects.knowd.entities.Topic;
-import me.projects.knowd.entities.UserEntity;
 import me.projects.knowd.tools.Status;
 
-import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 public class SubjectResponse {
 
@@ -26,9 +16,9 @@ public class SubjectResponse {
 
     private String area;
 
-    private Set<Topic> topics;
+    private List<TopicResponse> topics;
 
-    private Set<Relation> relations;
+    private List<RelationResponse> relations;
 
     private int relevance;
 
@@ -43,7 +33,7 @@ public class SubjectResponse {
 
     public SubjectResponse() {}
 
-    public SubjectResponse(Long id, String title, String field, String area, Set<Topic> topics, Set<Relation> relations, int relevance, int progress, Status status, boolean needsAttention, LocalDate dueDate) {
+    public SubjectResponse(Long id, String title, String field, String area, List<TopicResponse> topics, List<RelationResponse> relations, int relevance, int progress, Status status, boolean needsAttention, LocalDate dueDate) {
         this.id = id;
         this.title = title;
         this.field = field;
@@ -90,19 +80,19 @@ public class SubjectResponse {
         this.area = area;
     }
 
-    public Set<Topic> getTopics() {
+    public List<TopicResponse> getTopics() {
         return topics;
     }
 
-    public void setTopics(Set<Topic> topics) {
+    public void setTopics(List<TopicResponse> topics) {
         this.topics = topics;
     }
 
-    public Set<Relation> getRelations() {
+    public List<RelationResponse> getRelations() {
         return relations;
     }
 
-    public void setRelations(Set<Relation> relations) {
+    public void setRelations(List<RelationResponse> relations) {
         this.relations = relations;
     }
 

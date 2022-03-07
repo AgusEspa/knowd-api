@@ -2,6 +2,7 @@ package me.projects.knowd.services;
 
 import me.projects.knowd.dtos.requests.SubjectRequest;
 import me.projects.knowd.dtos.responses.SubjectResponse;
+import me.projects.knowd.dtos.responses.TopicResponse;
 import me.projects.knowd.entities.Subject;
 import me.projects.knowd.entities.UserEntity;
 import me.projects.knowd.exceptions.SubjectNotFoundException;
@@ -47,7 +48,8 @@ public class SubjectService {
                         subject.getTitle(),
                         subject.getField(),
                         subject.getArea(),
-                        subject.getTopics(),
+                        subject.getTopics().stream()
+                                .map(topic -> ),
                         subject.getRelations(),
                         subject.getRelevance(),
                         subject.getProgress(),
