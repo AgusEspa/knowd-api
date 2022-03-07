@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>me.projects</groupId>
-	<artifactId>self-okrs-api</artifactId>
+	<artifactId>knowd-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Self.OKRs</name>
-	<description>Self.OKRs API</description>
+	<name>knowd</name>
+	<description>knowd API</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
