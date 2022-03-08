@@ -114,7 +114,7 @@ public class SubjectService {
                 newSubject.getDueDate());
     }
 
-    public void updateSubject(Long id, SubjectRequest editedSubject) {
+    public SubjectResponse updateSubject(Long id, SubjectRequest editedSubject) {
 
         Subject fetchedSubject = validateUserAndFetchSubject(id);
 
@@ -129,6 +129,29 @@ public class SubjectService {
         fetchedSubject.setUser(fetchedSubject.getUser());
 
         subjectRepository.save(fetchedSubject);
+
+        return new SubjectResponse(
+                fetchedSubject.getId(),
+                fetchedSubject.getTitle(),
+                fetchedSubject.getField(),
+                fetchedSubject.getArea(),
+                fetchedSubject.getTopics().stream()
+                        .map(topic -> new TopicResponse(
+                                topic.getId(),
+                                topic.getTitle(),
+                                topic.getProgress(),
+                                topic.getStatus()))
+                        .collect(Collectors.toList()),
+                fetchedSubject.getRelations().stream()
+                        .map(relation -> new RelationResponse(
+                                relation.getId(),
+                                relation.getTitle()))
+                        .collect(Collectors.toList()),
+                fetchedSubject.getRelevance(),
+                fetchedSubject.getProgress(),
+                fetchedSubject.getStatus(),
+                fetchedSubject.getNeedsAttention(),
+                fetchedSubject.getDueDate());
     }
 
     public void removeSubject(Long id) {

@@ -33,8 +33,8 @@ public class SubjectController {
     }
 
     @PutMapping("/{id}")
-    void editSubject(@PathVariable Long id, @RequestBody SubjectRequest editedSubject) {
-        subjectService.updateSubject(id, editedSubject);
+    ResponseEntity<SubjectResponse> editSubject(@PathVariable Long id, @RequestBody SubjectRequest editedSubject) {
+        return ResponseEntity.ok(subjectService.updateSubject(id, editedSubject));
     }
 
     @DeleteMapping("/{id}")

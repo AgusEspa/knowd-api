@@ -44,9 +44,10 @@ public class Subject {
     @Max(100)
     private int progress;
 
-    @NotNull
+    @NotBlank
     private String status;
 
+    @NotNull
     private boolean needsAttention;
 
     private LocalDate dueDate;

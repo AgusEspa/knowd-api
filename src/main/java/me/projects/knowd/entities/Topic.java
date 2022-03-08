@@ -25,7 +25,7 @@ public class Topic {
     @Max(100)
     private int progress;
 
-    @NotNull
+    @NotBlank
     private String status;
 
     @NotNull
