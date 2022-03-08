@@ -1,7 +1,5 @@
 package me.projects.knowd.dtos.requests;
 
-import me.projects.knowd.tools.Status;
-
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -19,12 +17,12 @@ public class TopicRequest {
     private int progress;
 
     @NotNull(message = "Status must not be empty")
-    private Status status;
+    private String status;
 
 
     public TopicRequest() {}
 
-    public TopicRequest(String title, int progress, Status status) {
+    public TopicRequest(String title, int progress, String status) {
         this.title = title;
         this.progress = progress;
         this.status = status;
@@ -46,11 +44,11 @@ public class TopicRequest {
         this.progress = progress;
     }
 
-    public Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

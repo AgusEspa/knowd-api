@@ -1,14 +1,5 @@
 package me.projects.knowd.dtos.responses;
 
-import me.projects.knowd.entities.Subject;
-import me.projects.knowd.entities.UserEntity;
-import me.projects.knowd.tools.Status;
-
-import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class TopicResponse {
@@ -19,12 +10,12 @@ public class TopicResponse {
 
     private int progress;
 
-    private Status status;
+    private String status;
 
 
     public TopicResponse() {}
 
-    public TopicResponse(Long id, String title, int progress, Status status) {
+    public TopicResponse(Long id, String title, int progress, String status) {
         this.id = id;
         this.title = title;
         this.progress = progress;
@@ -56,11 +47,11 @@ public class TopicResponse {
         this.progress = progress;
     }
 
-    public Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

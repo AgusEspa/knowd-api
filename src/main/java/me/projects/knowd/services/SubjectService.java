@@ -71,7 +71,7 @@ public class SubjectService {
         return subjectResponseList;
     }
 
-    public void newSubject(SubjectRequest subjectRequest) {
+    public SubjectResponse newSubject(SubjectRequest subjectRequest) {
 
         String username = getUsername();
 
@@ -89,6 +89,29 @@ public class SubjectService {
                 subjectRequest.getDueDate(),
                 user);
         subjectRepository.save(newSubject);
+
+        return new SubjectResponse(
+                newSubject.getId(),
+                newSubject.getTitle(),
+                newSubject.getField(),
+                newSubject.getArea(),
+                newSubject.getTopics().stream()
+                        .map(topic -> new TopicResponse(
+                                topic.getId(),
+                                topic.getTitle(),
+                                topic.getProgress(),
+                                topic.getStatus()))
+                        .collect(Collectors.toList()),
+                newSubject.getRelations().stream()
+                        .map(relation -> new RelationResponse(
+                                relation.getId(),
+                                relation.getTitle()))
+                        .collect(Collectors.toList()),
+                newSubject.getRelevance(),
+                newSubject.getProgress(),
+                newSubject.getStatus(),
+                newSubject.getNeedsAttention(),
+                newSubject.getDueDate());
     }
 
     public void updateSubject(Long id, SubjectRequest editedSubject) {

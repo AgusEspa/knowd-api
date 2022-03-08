@@ -1,7 +1,5 @@
 package me.projects.knowd.entities;
 
-import me.projects.knowd.tools.Status;
-
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -47,7 +45,7 @@ public class Subject {
     private int progress;
 
     @NotNull
-    private Status status;
+    private String status;
 
     private boolean needsAttention;
 
@@ -61,7 +59,7 @@ public class Subject {
 
     public Subject() {}
 
-    public Subject(String title, String field, String area, int relevance, int progress, Status status, boolean needsAttention, LocalDate dueDate, UserEntity user) {
+    public Subject(String title, String field, String area, int relevance, int progress, String status, boolean needsAttention, LocalDate dueDate, UserEntity user) {
         this.title = title;
         this.field = field;
         this.area = area;
@@ -130,11 +128,11 @@ public class Subject {
         this.progress = progress;
     }
 
-    public Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

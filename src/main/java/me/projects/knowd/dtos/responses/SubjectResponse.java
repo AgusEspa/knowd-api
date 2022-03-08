@@ -1,7 +1,5 @@
 package me.projects.knowd.dtos.responses;
 
-import me.projects.knowd.tools.Status;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -24,7 +22,7 @@ public class SubjectResponse {
 
     private int progress;
 
-    private Status status;
+    private String status;
 
     private boolean needsAttention;
 
@@ -33,7 +31,7 @@ public class SubjectResponse {
 
     public SubjectResponse() {}
 
-    public SubjectResponse(Long id, String title, String field, String area, List<TopicResponse> topics, List<RelationResponse> relations, int relevance, int progress, Status status, boolean needsAttention, LocalDate dueDate) {
+    public SubjectResponse(Long id, String title, String field, String area, List<TopicResponse> topics, List<RelationResponse> relations, int relevance, int progress, String status, boolean needsAttention, LocalDate dueDate) {
         this.id = id;
         this.title = title;
         this.field = field;
@@ -112,11 +110,11 @@ public class SubjectResponse {
         this.progress = progress;
     }
 
-    public Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

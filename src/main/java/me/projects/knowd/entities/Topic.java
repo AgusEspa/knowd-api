@@ -1,6 +1,5 @@
 package me.projects.knowd.entities;
 
-import me.projects.knowd.tools.Status;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -27,7 +26,7 @@ public class Topic {
     private int progress;
 
     @NotNull
-    private Status status;
+    private String status;
 
     @NotNull
     @ManyToOne
@@ -42,7 +41,7 @@ public class Topic {
 
     public Topic() {}
 
-    public Topic(String title, int progress, Status status, Subject subject, UserEntity user) {
+    public Topic(String title, int progress, String status, Subject subject, UserEntity user) {
         this.title = title;
         this.progress = progress;
         this.status = status;
@@ -75,11 +74,11 @@ public class Topic {
         this.progress = progress;
     }
 
-    public Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

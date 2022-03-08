@@ -1,7 +1,6 @@
 package me.projects.knowd.dtos.requests;
 
 import me.projects.knowd.exceptions.CustomMethodArgumentNotValidException;
-import me.projects.knowd.tools.Status;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -32,7 +31,7 @@ public class SubjectRequest {
     private int progress;
 
     @NotNull(message = "Status must not be empty")
-    private Status status;
+    private String status;
 
     private boolean needsAttention;
 
@@ -41,7 +40,7 @@ public class SubjectRequest {
 
     public SubjectRequest() {}
 
-    public SubjectRequest(String title, String field, String area, int relevance, int progress, Status status, boolean needsAttention, String dueDate) {
+    public SubjectRequest(String title, String field, String area, int relevance, int progress, String status, boolean needsAttention, String dueDate) {
         this.title = title;
         this.field = field;
         this.area = area;
@@ -100,11 +99,11 @@ public class SubjectRequest {
         this.progress = progress;
     }
 
-    public Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

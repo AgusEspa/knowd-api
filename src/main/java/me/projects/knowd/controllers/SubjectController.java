@@ -28,8 +28,8 @@ public class SubjectController {
     }
 
     @PostMapping
-    void createSubject(@Valid @RequestBody SubjectRequest subjectRequest) {
-        subjectService.newSubject(subjectRequest);
+    ResponseEntity<SubjectResponse> createSubject(@Valid @RequestBody SubjectRequest subjectRequest) {
+        return ResponseEntity.ok(subjectService.newSubject(subjectRequest));
     }
 
     @PutMapping("/{id}")
