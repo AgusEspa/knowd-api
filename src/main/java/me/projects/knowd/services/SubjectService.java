@@ -1,6 +1,7 @@
 package me.projects.knowd.services;
 
 import me.projects.knowd.dtos.requests.SubjectRequest;
+import me.projects.knowd.dtos.responses.RelationResponse;
 import me.projects.knowd.dtos.responses.SubjectResponse;
 import me.projects.knowd.dtos.responses.TopicResponse;
 import me.projects.knowd.entities.Subject;
@@ -49,8 +50,17 @@ public class SubjectService {
                         subject.getField(),
                         subject.getArea(),
                         subject.getTopics().stream()
-                                .map(topic -> ),
-                        subject.getRelations(),
+                                .map(topic -> new TopicResponse(
+                                        topic.getId(),
+                                        topic.getTitle(),
+                                        topic.getProgress(),
+                                        topic.getStatus()))
+                                .collect(Collectors.toList()),
+                        subject.getRelations().stream()
+                                .map(relation -> new RelationResponse(
+                                        relation.getId(),
+                                        relation.getTitle()))
+                                .collect(Collectors.toList()),
                         subject.getRelevance(),
                         subject.getProgress(),
                         subject.getStatus(),
