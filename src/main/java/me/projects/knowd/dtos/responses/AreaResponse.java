@@ -1,11 +1,5 @@
 package me.projects.knowd.dtos.responses;
 
-import me.projects.knowd.entities.Subject;
-import me.projects.knowd.entities.UserEntity;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class AreaResponse {
