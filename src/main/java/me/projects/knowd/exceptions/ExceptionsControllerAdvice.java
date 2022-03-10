@@ -48,6 +48,13 @@ public class ExceptionsControllerAdvice {
                 .body(ex.getMessage());
     }
 
+    @ExceptionHandler(AreaNotFoundException.class)
+    ResponseEntity<String> handleAreaNotFoundException(AreaNotFoundException ex) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(ex.getMessage());
+    }
+
     @ExceptionHandler(UserAlreadyExistsException.class)
     ResponseEntity<String> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
         return ResponseEntity

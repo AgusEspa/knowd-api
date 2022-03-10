@@ -19,8 +19,8 @@ public class Area {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "subject_id")
-    private Subject subject;
+    @JoinColumn(name = "field_id")
+    private Field field;
 
     @NotNull
     @ManyToOne
@@ -30,9 +30,9 @@ public class Area {
 
     public Area() {}
 
-    public Area(String title, Subject subject, UserEntity user) {
+    public Area(String title, Field field, UserEntity user) {
         this.title = title;
-        this.subject = subject;
+        this.field = field;
         this.user = user;
     }
 
@@ -53,12 +53,12 @@ public class Area {
         this.title = title;
     }
 
-    public Subject getSubject() {
-        return subject;
+    public Field getField() {
+        return field;
     }
 
-    public void setSubject(Subject subject) {
-        this.subject = subject;
+    public void setField(Field field) {
+        this.field = field;
     }
 
     public UserEntity getUser() {
@@ -75,11 +75,11 @@ public class Area {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Area area = (Area) o;
-        return Objects.equals(id, area.id) && Objects.equals(title, area.title) && Objects.equals(subject, area.subject) && Objects.equals(user, area.user);
+        return Objects.equals(id, area.id) && Objects.equals(title, area.title) && Objects.equals(field, area.field) && Objects.equals(user, area.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, subject, user);
+        return Objects.hash(id, title, field, user);
     }
 }

@@ -16,19 +16,19 @@ public class TopicController {
     private final TopicService topicService;
 
     @Autowired
-    public TopicController(TopicService taskService) {
-        this.topicService = taskService;
+    public TopicController(TopicService topicService) {
+        this.topicService = topicService;
     }
 
 
     @PostMapping("/{subjectId}/topics")
-    void createKeyResult(@PathVariable Long subjectId, @Valid @RequestBody TopicRequest topicRequest) {
+    void createTopic(@PathVariable Long subjectId, @Valid @RequestBody TopicRequest topicRequest) {
         topicService.newTopic(subjectId, topicRequest);
 
     }
 
-    @PutMapping("/{subjectId}/topics/{id}")
-    void editTopic(@PathVariable Long subjectId, @PathVariable Long id, @RequestBody TopicRequest editedTopic) {
+    @PutMapping("/topics/{id}")
+    void editTopic(@PathVariable Long id, @RequestBody TopicRequest editedTopic) {
         topicService.updateTopic(id, editedTopic);
     }
 
