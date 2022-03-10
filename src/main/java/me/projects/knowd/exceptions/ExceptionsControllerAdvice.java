@@ -41,6 +41,13 @@ public class ExceptionsControllerAdvice {
                 .body(ex.getMessage());
     }
 
+    @ExceptionHandler(FieldNotFoundException.class)
+    ResponseEntity<String> handleFieldNotFoundException(FieldNotFoundException ex) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(ex.getMessage());
+    }
+
     @ExceptionHandler(UserAlreadyExistsException.class)
     ResponseEntity<String> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
         return ResponseEntity
