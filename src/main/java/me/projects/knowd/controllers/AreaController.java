@@ -2,7 +2,6 @@ package me.projects.knowd.controllers;
 
 
 import me.projects.knowd.dtos.requests.AreaRequest;
-import me.projects.knowd.dtos.requests.TopicRequest;
 import me.projects.knowd.dtos.responses.AreaResponse;
 import me.projects.knowd.services.AreaService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,14 +1,7 @@
 package me.projects.knowd.dtos.requests;
 
-import me.projects.knowd.entities.Area;
-import me.projects.knowd.entities.UserEntity;
-
-import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 public class FieldRequest {
 

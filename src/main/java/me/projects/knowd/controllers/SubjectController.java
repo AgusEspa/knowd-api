@@ -2,9 +2,11 @@ package me.projects.knowd.controllers;
 
 import me.projects.knowd.dtos.requests.SubjectRequest;
 import me.projects.knowd.dtos.responses.SubjectResponse;
+import me.projects.knowd.services.FieldService;
 import me.projects.knowd.services.SubjectService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +18,7 @@ import java.util.List;
 public class SubjectController {
 
     private final SubjectService subjectService;
+
 
     @Autowired
     public SubjectController(SubjectService subjectService) {

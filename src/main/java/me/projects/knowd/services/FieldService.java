@@ -1,13 +1,10 @@
 package me.projects.knowd.services;
 
 import me.projects.knowd.dtos.requests.FieldRequest;
-import me.projects.knowd.dtos.requests.SubjectRequest;
 import me.projects.knowd.dtos.responses.*;
 import me.projects.knowd.entities.Field;
-import me.projects.knowd.entities.Subject;
 import me.projects.knowd.entities.UserEntity;
 import me.projects.knowd.exceptions.FieldNotFoundException;
-import me.projects.knowd.exceptions.SubjectNotFoundException;
 import me.projects.knowd.exceptions.UserEntityNotFoundException;
 import me.projects.knowd.exceptions.UserNotAuthorizedException;
 import me.projects.knowd.repositories.FieldRepository;
@@ -43,6 +40,8 @@ public class FieldService {
 
         UserEntity user = userEntityRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
+
+
 
         return fieldRepository.findByUserId(user.getId()).stream()
                 .map(field -> new FieldResponse(

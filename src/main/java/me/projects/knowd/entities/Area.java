@@ -80,6 +80,6 @@ public class Area {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, field, user);
+        return Objects.hash(id, title, user);
     }
 }

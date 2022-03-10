@@ -1,10 +1,10 @@
 package me.projects.knowd.controllers;
 
 import me.projects.knowd.dtos.requests.FieldRequest;
-import me.projects.knowd.dtos.requests.SubjectRequest;
 import me.projects.knowd.dtos.responses.FieldResponse;
-import me.projects.knowd.dtos.responses.SubjectResponse;
 import me.projects.knowd.services.FieldService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +17,7 @@ import java.util.List;
 public class FieldController {
 
     private final FieldService fieldService;
+    Logger logger = LoggerFactory.getLogger(FieldService.class);
 
     @Autowired
     public FieldController(FieldService fieldService) {

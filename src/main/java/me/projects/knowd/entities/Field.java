@@ -78,6 +78,6 @@ public class Field {
 
     @Override
     public int hashCode() {
-        return Objects.hash(Id, title, areas, user);
+        return Objects.hash(Id, title, user);
     }
 }
