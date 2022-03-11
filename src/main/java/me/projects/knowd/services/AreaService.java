@@ -4,6 +4,7 @@ import me.projects.knowd.dtos.requests.AreaRequest;
 import me.projects.knowd.dtos.responses.AreaResponse;
 import me.projects.knowd.entities.*;
 import me.projects.knowd.exceptions.AreaNotFoundException;
+import me.projects.knowd.exceptions.FieldNotFoundException;
 import me.projects.knowd.exceptions.UserEntityNotFoundException;
 import me.projects.knowd.exceptions.UserNotAuthorizedException;
 import me.projects.knowd.repositories.*;
@@ -36,7 +37,7 @@ public class AreaService {
         UserEntity user = userEntityRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
 
-        Field field = fieldRepository.getById(fieldId);
+        Field field = fieldRepository.findById(fieldId).orElseThrow(() -> new FieldNotFoundException(fieldId));
 
         Area newArea = new Area(
                 areaRequest.getTitle(),
@@ -44,7 +45,7 @@ public class AreaService {
                 user);
         areaRepository.save(newArea);
 
-        return new AreaResponse(newArea.getId(), newArea.getTitle());
+        return new AreaResponse(newArea.getId(), newArea.getTitle(), newArea.getField().getId());
     }
 
     public AreaResponse updateArea(Long id, AreaRequest editedArea) {
@@ -56,7 +57,7 @@ public class AreaService {
         fetchedArea.setUser(fetchedArea.getUser());
         areaRepository.save(fetchedArea);
 
-        return new AreaResponse(fetchedArea.getId(), fetchedArea.getTitle());
+        return new AreaResponse(fetchedArea.getId(), fetchedArea.getTitle(), fetchedArea.getField().getId());
     }
 
     public void removeArea(Long id) {

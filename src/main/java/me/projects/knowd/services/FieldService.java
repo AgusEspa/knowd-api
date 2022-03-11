@@ -48,7 +48,7 @@ public class FieldService {
                         field.getId(),
                         field.getTitle(),
                         field.getAreas().stream()
-                                .map(topic -> new AreaResponse(
+                                .map(topic -> new AreaFieldResponse(
                                         topic.getId(),
                                         topic.getTitle()))
                                 .collect(Collectors.toList())))
@@ -71,7 +71,7 @@ public class FieldService {
                 newField.getId(),
                 newField.getTitle(),
                 newField.getAreas().stream()
-                        .map(topic -> new AreaResponse(
+                        .map(topic -> new AreaFieldResponse(
                                         topic.getId(),
                                         topic.getTitle()))
                         .collect(Collectors.toList()));
@@ -90,7 +90,7 @@ public class FieldService {
                 fetchedField.getId(),
                 fetchedField.getTitle(),
                 fetchedField.getAreas().stream()
-                        .map(topic -> new AreaResponse(
+                        .map(topic -> new AreaFieldResponse(
                                 topic.getId(),
                                 topic.getTitle()))
                         .collect(Collectors.toList()));

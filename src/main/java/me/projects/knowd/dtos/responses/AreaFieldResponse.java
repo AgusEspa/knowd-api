@@ -1,23 +1,19 @@
 package me.projects.knowd.dtos.responses;
 
-import java.util.List;
 import java.util.Objects;
 
-public class FieldResponse {
+public class AreaFieldResponse {
 
     private Long id;
 
     private String title;
 
-    private List<AreaFieldResponse> areas;
 
+    public AreaFieldResponse() {}
 
-    public FieldResponse() {}
-
-    public FieldResponse(Long id, String title, List<AreaFieldResponse> areas) {
+    public AreaFieldResponse(Long id, String title) {
         this.id = id;
         this.title = title;
-        this.areas = areas;
     }
 
 
@@ -37,25 +33,17 @@ public class FieldResponse {
         this.title = title;
     }
 
-    public List<AreaFieldResponse> getAreas() {
-        return areas;
-    }
-
-    public void setAreas(List<AreaFieldResponse> areas) {
-        this.areas = areas;
-    }
-
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FieldResponse that = (FieldResponse) o;
-        return Objects.equals(id, that.id) && Objects.equals(title, that.title) && Objects.equals(areas, that.areas);
+        AreaFieldResponse that = (AreaFieldResponse) o;
+        return Objects.equals(id, that.id) && Objects.equals(title, that.title);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, areas);
+        return Objects.hash(id, title);
     }
 }

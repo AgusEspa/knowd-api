@@ -8,12 +8,15 @@ public class AreaResponse {
 
     private String title;
 
+    private Long fieldId;
+
 
     public AreaResponse() {}
 
-    public AreaResponse(Long id, String title) {
+    public AreaResponse(Long id, String title, Long fieldId) {
         this.id = id;
         this.title = title;
+        this.fieldId = fieldId;
     }
 
 
@@ -33,6 +36,13 @@ public class AreaResponse {
         this.title = title;
     }
 
+    public Long getFieldId() {
+        return fieldId;
+    }
+
+    public void setFieldId(Long fieldId) {
+        this.fieldId = fieldId;
+    }
 
     @Override
     public boolean equals(Object o) {
