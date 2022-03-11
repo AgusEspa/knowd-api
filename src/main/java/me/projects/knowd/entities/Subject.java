@@ -25,7 +25,6 @@ public class Subject {
     @NotBlank
     private String field;
 
-    @NotBlank
     private String area;
 
     @OneToMany(mappedBy = "subject", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

@@ -17,7 +17,6 @@ public class SubjectRequest {
     @NotBlank(message = "Field must not be empty")
     private String field;
 
-    @NotBlank(message = "Area must not be empty")
     private String area;
 
     @NotNull
