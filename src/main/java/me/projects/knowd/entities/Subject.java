@@ -19,10 +19,8 @@ public class Subject {
     @Column(name = "subject_id")
     private Long id;
 
-    @NotBlank
     private String title;
 
-    @NotBlank
     private String field;
 
     private String area;

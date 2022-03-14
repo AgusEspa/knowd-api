@@ -104,7 +104,7 @@ public class UserEntityService {
 
     public void sendPasswordToken(String passwordToken, String emailAddress) {
         String resetLink = "To set a new password, please follow this link or copy/paste it into your browser: " + "http://localhost:3000/reset_password?token=" + passwordToken;
-        emailService.sendEmail(emailAddress, "Self.OKRs Help Desk <knowd.help@gmail.com>", "Password reset", resetLink);
+        emailService.sendEmail(emailAddress, "Knowd Help Desk <knowd.help@gmail.com>", "Password reset", resetLink);
         logger.info("Sending reset password token to " + emailAddress);
     }
 

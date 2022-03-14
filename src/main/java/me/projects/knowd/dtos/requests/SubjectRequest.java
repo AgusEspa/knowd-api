@@ -11,10 +11,8 @@ import java.util.Objects;
 
 public class SubjectRequest {
 
-    @NotBlank(message = "Title must not be empty")
     private String title;
 
-    @NotBlank(message = "Field must not be empty")
     private String field;
 
     private String area;
