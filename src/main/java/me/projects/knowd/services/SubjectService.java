@@ -40,9 +40,11 @@ public class SubjectService {
 
         String username = getUsername();
 
+        logger.info("Fetching user");
         UserEntity user = userEntityRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
 
+        logger.info("Fetching and building subjects");
         List<SubjectResponse> subjectResponseList = subjectRepository.findByUserId(user.getId()).stream()
                 .map(subject -> new SubjectResponse(
                         subject.getId(),
@@ -67,6 +69,7 @@ public class SubjectService {
                         subject.getNeedsAttention(),
                         subject.getDueDate()))
                 .collect(Collectors.toList());
+        logger.info("Finished building subjects");
 
         return subjectResponseList;
     }
