@@ -40,29 +40,20 @@ public class SubjectService {
 
         String username = getUsername();
 
-        logger.info("Fetching user");
         UserEntity user = userEntityRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
 
-        logger.info("Fetching and building subjects");
-        List<SubjectResponse> subjectResponseList = subjectRepository.findByUserId(user.getId()).stream()
+        logger.info("Fetching subjects");
+
+        List<Subject> fetchedSubject = subjectRepository.findByUserId(user.getId());
+        logger.info("Building subjects");
+
+        List<SubjectResponse> subjectResponseList = fetchedSubject.stream()
                 .map(subject -> new SubjectResponse(
                         subject.getId(),
                         subject.getTitle(),
                         subject.getField(),
                         subject.getArea(),
-                        subject.getTopics().stream()
-                                .map(topic -> new TopicResponse(
-                                        topic.getId(),
-                                        topic.getTitle(),
-                                        topic.getProgress(),
-                                        topic.getStatus()))
-                                .collect(Collectors.toList()),
-                        subject.getRelations().stream()
-                                .map(relation -> new RelationResponse(
-                                        relation.getId(),
-                                        relation.getTitle()))
-                                .collect(Collectors.toList()),
                         subject.getRelevance(),
                         subject.getProgress(),
                         subject.getStatus(),
@@ -98,18 +89,6 @@ public class SubjectService {
                 newSubject.getTitle(),
                 newSubject.getField(),
                 newSubject.getArea(),
-                newSubject.getTopics().stream()
-                        .map(topic -> new TopicResponse(
-                                topic.getId(),
-                                topic.getTitle(),
-                                topic.getProgress(),
-                                topic.getStatus()))
-                        .collect(Collectors.toList()),
-                newSubject.getRelations().stream()
-                        .map(relation -> new RelationResponse(
-                                relation.getId(),
-                                relation.getTitle()))
-                        .collect(Collectors.toList()),
                 newSubject.getRelevance(),
                 newSubject.getProgress(),
                 newSubject.getStatus(),
@@ -138,18 +117,6 @@ public class SubjectService {
                 fetchedSubject.getTitle(),
                 fetchedSubject.getField(),
                 fetchedSubject.getArea(),
-                fetchedSubject.getTopics().stream()
-                        .map(topic -> new TopicResponse(
-                                topic.getId(),
-                                topic.getTitle(),
-                                topic.getProgress(),
-                                topic.getStatus()))
-                        .collect(Collectors.toList()),
-                fetchedSubject.getRelations().stream()
-                        .map(relation -> new RelationResponse(
-                                relation.getId(),
-                                relation.getTitle()))
-                        .collect(Collectors.toList()),
                 fetchedSubject.getRelevance(),
                 fetchedSubject.getProgress(),
                 fetchedSubject.getStatus(),

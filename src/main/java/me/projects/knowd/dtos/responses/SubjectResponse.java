@@ -14,10 +14,6 @@ public class SubjectResponse {
 
     private String area;
 
-    private List<TopicResponse> topics;
-
-    private List<RelationResponse> relations;
-
     private int relevance;
 
     private int progress;
@@ -31,13 +27,11 @@ public class SubjectResponse {
 
     public SubjectResponse() {}
 
-    public SubjectResponse(Long id, String title, String field, String area, List<TopicResponse> topics, List<RelationResponse> relations, int relevance, int progress, String status, boolean needsAttention, LocalDate dueDate) {
+    public SubjectResponse(Long id, String title, String field, String area, int relevance, int progress, String status, boolean needsAttention, LocalDate dueDate) {
         this.id = id;
         this.title = title;
         this.field = field;
         this.area = area;
-        this.topics = topics;
-        this.relations = relations;
         this.relevance = relevance;
         this.progress = progress;
         this.status = status;
@@ -76,22 +70,6 @@ public class SubjectResponse {
 
     public void setArea(String area) {
         this.area = area;
-    }
-
-    public List<TopicResponse> getTopics() {
-        return topics;
-    }
-
-    public void setTopics(List<TopicResponse> topics) {
-        this.topics = topics;
-    }
-
-    public List<RelationResponse> getRelations() {
-        return relations;
-    }
-
-    public void setRelations(List<RelationResponse> relations) {
-        this.relations = relations;
     }
 
     public int getRelevance() {
