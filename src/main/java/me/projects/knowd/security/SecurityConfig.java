@@ -56,14 +56,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.httpBasic().disable()
                 .csrf().disable()
                 .cors()
-                        .and()
+                .and()
                 .authorizeRequests()
                 .mvcMatchers(HttpMethod.POST, "/api/users/signup").permitAll()
                 .mvcMatchers(HttpMethod.GET, "/api/users/token/refresh").permitAll()
                 .mvcMatchers(HttpMethod.POST, "/api/users/forgot_password").permitAll()
                 .mvcMatchers(HttpMethod.PUT, "/api/users/reset_password").permitAll()
                 .anyRequest().authenticated()
-                        .and()
+                .and()
                 .addFilter(new CustomAuthenticationFilter(authenticationManagerBean()))
                 .addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
