@@ -2,7 +2,6 @@ package me.projects.knowd.services;
 
 import me.projects.knowd.dtos.requests.RelationRequest;
 import me.projects.knowd.dtos.responses.RelationResponse;
-import me.projects.knowd.dtos.responses.SubjectResponse;
 import me.projects.knowd.entities.Relation;
 import me.projects.knowd.entities.Subject;
 import me.projects.knowd.entities.UserEntity;
@@ -37,7 +36,7 @@ public class RelationService {
         this.subjectRepository = subjectRepository;
     }
 
-    public void newRelation(Long subjectId, RelationRequest relationRequest) {
+    public RelationResponse newRelation(Long subjectId, RelationRequest relationRequest) {
         String username = getUsername();
         UserEntity user = userEntityRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
@@ -49,16 +48,8 @@ public class RelationService {
                 subject,
                 user);
         relationRepository.save(newRelation);
-    }
 
-    public void updateRelation(Long id, RelationRequest editedRelation) {
-
-        Relation fetchedRelation = validateUserAndFetchRelation(id);
-
-        fetchedRelation.setTitle(editedRelation.getTitle());
-        fetchedRelation.setSubject(fetchedRelation.getSubject());
-        fetchedRelation.setUser(fetchedRelation.getUser());
-        relationRepository.save(fetchedRelation);
+        return new RelationResponse(newRelation.getId(), newRelation.getTitle());
     }
 
     public void removeRelation(Long id) {

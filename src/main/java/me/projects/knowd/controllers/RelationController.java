@@ -1,6 +1,8 @@
 package me.projects.knowd.controllers;
 
 import me.projects.knowd.dtos.requests.RelationRequest;
+import me.projects.knowd.dtos.responses.RelationResponse;
+import me.projects.knowd.dtos.responses.SubjectResponse;
 import me.projects.knowd.services.RelationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,14 +25,9 @@ public class RelationController {
 
 
     @PostMapping("/{subjectId}/relations")
-    void createRelation(@PathVariable Long subjectId, @Valid @RequestBody RelationRequest relationRequest) {
-        relationService.newRelation(subjectId, relationRequest);
+    ResponseEntity<RelationResponse> createRelation(@PathVariable Long subjectId, @Valid @RequestBody RelationRequest relationRequest) {
+        return ResponseEntity.ok(relationService.newRelation(subjectId, relationRequest));
 
-    }
-
-    @PutMapping("/{subjectId}/relations/{id}")
-    void editRelation(@PathVariable Long subjectId, @PathVariable Long id, @RequestBody RelationRequest editedRelation) {
-        relationService.updateRelation(id, editedRelation);
     }
 
     @DeleteMapping("/relations/{id}")
