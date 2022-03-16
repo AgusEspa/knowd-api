@@ -3,12 +3,13 @@ package me.projects.knowd.services;
 import me.projects.knowd.dtos.requests.SubjectRequest;
 import me.projects.knowd.dtos.responses.RelationResponse;
 import me.projects.knowd.dtos.responses.SubjectResponse;
-import me.projects.knowd.dtos.responses.TopicResponse;
+import me.projects.knowd.entities.Relation;
 import me.projects.knowd.entities.Subject;
 import me.projects.knowd.entities.UserEntity;
 import me.projects.knowd.exceptions.SubjectNotFoundException;
 import me.projects.knowd.exceptions.UserEntityNotFoundException;
 import me.projects.knowd.exceptions.UserNotAuthorizedException;
+import me.projects.knowd.repositories.RelationRepository;
 import me.projects.knowd.repositories.SubjectRepository;
 import me.projects.knowd.repositories.UserEntityRepository;
 import org.slf4j.Logger;
@@ -27,13 +28,16 @@ public class SubjectService {
 
     private final UserEntityRepository userEntityRepository;
 
+    private final RelationRepository relationRepository;
+
     Logger logger = LoggerFactory.getLogger(SubjectService.class);
 
 
     @Autowired
-    public SubjectService(SubjectRepository subjectRepository, UserEntityRepository userEntityRepository) {
+    public SubjectService(SubjectRepository subjectRepository, UserEntityRepository userEntityRepository, RelationRepository relationRepository) {
         this.subjectRepository = subjectRepository;
         this.userEntityRepository = userEntityRepository;
+        this.relationRepository = relationRepository;
     }
 
     public List<SubjectResponse> fetchSubjects() {
@@ -45,6 +49,8 @@ public class SubjectService {
 
 
         List<Subject> fetchedSubject = subjectRepository.findByUserId(user.getId());
+
+        List<Relation> fetchedRelations = relationRepository.findByUserId(user.getId());
 
         List<SubjectResponse> subjectResponseList = fetchedSubject.stream()
                 .map(subject -> new SubjectResponse(

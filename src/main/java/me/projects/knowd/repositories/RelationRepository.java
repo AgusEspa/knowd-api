@@ -8,7 +8,10 @@ import java.util.List;
 
 public interface RelationRepository extends JpaRepository<Relation, Long> {
 
-    @Query(value = "SELECT * FROM TOPICS WHERE SUBJECT_ID = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM RELATIONS WHERE SUBJECT_ID = ?1", nativeQuery = true)
     List<Relation> findAllPerSubject(Long subjectId);
+
+    @Query(value = "SELECT * FROM RELATIONS WHERE USER_ID = ?1", nativeQuery = true)
+    List<Relation> findByUserId(Long id);
 
 }
