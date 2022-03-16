@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -62,7 +63,11 @@ public class SubjectService {
                         subject.getProgress(),
                         subject.getStatus(),
                         subject.getNeedsAttention(),
-                        subject.getDueDate()))
+                        subject.getDueDate(),
+                        fetchedRelations.stream()
+                                .filter(relations -> relations.getSubject().getId().equals(subject.getId()))
+                                .map(relation -> new RelationResponse(relation.getId(), relation.getTitle()))
+                                .collect(Collectors.toList())))
                 .collect(Collectors.toList());
 
         return subjectResponseList;
@@ -96,7 +101,8 @@ public class SubjectService {
                 newSubject.getProgress(),
                 newSubject.getStatus(),
                 newSubject.getNeedsAttention(),
-                newSubject.getDueDate());
+                newSubject.getDueDate(),
+                new ArrayList<RelationResponse>());
     }
 
     public SubjectResponse updateSubject(Long id, SubjectRequest editedSubject) {
@@ -124,7 +130,10 @@ public class SubjectService {
                 fetchedSubject.getProgress(),
                 fetchedSubject.getStatus(),
                 fetchedSubject.getNeedsAttention(),
-                fetchedSubject.getDueDate());
+                fetchedSubject.getDueDate(),
+                fetchedSubject.getRelations().stream()
+                        .map(relation -> new RelationResponse(relation.getId(), relation.getTitle()))
+                        .collect(Collectors.toList()));
     }
 
     public void removeSubject(Long id) {

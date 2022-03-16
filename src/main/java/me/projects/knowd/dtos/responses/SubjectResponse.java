@@ -24,10 +24,12 @@ public class SubjectResponse {
 
     private LocalDate dueDate;
 
+    private List<RelationResponse> relations;
+
 
     public SubjectResponse() {}
 
-    public SubjectResponse(Long id, String title, String field, String area, int relevance, int progress, String status, boolean needsAttention, LocalDate dueDate) {
+    public SubjectResponse(Long id, String title, String field, String area, int relevance, int progress, String status, boolean needsAttention, LocalDate dueDate, List<RelationResponse> relations) {
         this.id = id;
         this.title = title;
         this.field = field;
@@ -37,6 +39,7 @@ public class SubjectResponse {
         this.status = status;
         this.needsAttention = needsAttention;
         this.dueDate = dueDate;
+        this.relations = relations;
     }
 
 
@@ -112,6 +115,13 @@ public class SubjectResponse {
         this.dueDate = dueDate;
     }
 
+    public List<RelationResponse> getRelations() {
+        return relations;
+    }
+
+    public void setRelations(List<RelationResponse> relations) {
+        this.relations = relations;
+    }
 
     @Override
     public boolean equals(Object o) {
