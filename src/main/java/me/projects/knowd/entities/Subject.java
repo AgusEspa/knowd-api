@@ -25,12 +25,6 @@ public class Subject {
 
     private String area;
 
-    @OneToMany(mappedBy = "subject", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Topic> topics = new HashSet<>();
-
-    @OneToMany(mappedBy = "subject", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Relation> relations = new HashSet<>();
-
     @NotNull
     @Min(1)
     @Max(10)
@@ -53,6 +47,12 @@ public class Subject {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
+
+    @OneToMany(mappedBy = "subject", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Topic> topics = new HashSet<>();
+
+    @OneToMany(mappedBy = "subject", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Relation> relations = new HashSet<>();
 
 
     public Subject() {}

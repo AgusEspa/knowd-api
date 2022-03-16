@@ -3,9 +3,11 @@ package me.projects.knowd.controllers;
 import me.projects.knowd.dtos.requests.RelationRequest;
 import me.projects.knowd.services.RelationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/subjects")
@@ -18,6 +20,11 @@ public class RelationController {
     public RelationController(RelationService relationService) {
         this.relationService = relationService;
     }
+
+//    @GetMapping("/relations")
+//    ResponseEntity<List> getRelations() {
+//        return ResponseEntity.ok(relationService.fetchRelations());
+//    }
 
     @PostMapping("/{subjectId}/relations")
     void createRelation(@PathVariable Long subjectId, @Valid @RequestBody RelationRequest relationRequest) {

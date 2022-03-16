@@ -1,6 +1,8 @@
 package me.projects.knowd.services;
 
 import me.projects.knowd.dtos.requests.RelationRequest;
+import me.projects.knowd.dtos.responses.RelationResponse;
+import me.projects.knowd.dtos.responses.SubjectResponse;
 import me.projects.knowd.entities.Relation;
 import me.projects.knowd.entities.Subject;
 import me.projects.knowd.entities.UserEntity;
@@ -15,6 +17,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RelationService {
@@ -34,6 +39,23 @@ public class RelationService {
         this.subjectRepository = subjectRepository;
     }
 
+
+//    public List fetchRelations() {
+//        String username = getUsername();
+//        UserEntity user = userEntityRepository.findByEmailAddress(username)
+//                .orElseThrow(() -> new UserEntityNotFoundException(username));
+//
+//        List<Relation> fetchedRelations = relationRepository.findById(user.getId());
+//
+//        List<SubjectResponse> subjectResponseList = fetchedRelations.stream()
+//                .map(relation -> new RelationResponse(
+//                        relation.getId(),
+//                        relation.getTitle(),
+//                        relation.getSubject())
+//                .collect(Collectors.toList()));
+//
+//        return subjectResponseList;
+//    }
 
     public void newRelation(Long subjectId, RelationRequest relationRequest) {
         String username = getUsername();

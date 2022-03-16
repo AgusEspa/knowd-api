@@ -8,7 +8,6 @@ public class RelationResponse {
 
     private String title;
 
-
     public RelationResponse() {}
 
     public RelationResponse(Long id, String title) {
