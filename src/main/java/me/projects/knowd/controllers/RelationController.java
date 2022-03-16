@@ -21,10 +21,6 @@ public class RelationController {
         this.relationService = relationService;
     }
 
-//    @GetMapping("/relations")
-//    ResponseEntity<List> getRelations() {
-//        return ResponseEntity.ok(relationService.fetchRelations());
-//    }
 
     @PostMapping("/{subjectId}/relations")
     void createRelation(@PathVariable Long subjectId, @Valid @RequestBody RelationRequest relationRequest) {
