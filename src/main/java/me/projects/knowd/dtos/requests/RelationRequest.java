@@ -1,11 +1,9 @@
 package me.projects.knowd.dtos.requests;
 
-import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
 public class RelationRequest {
 
-    @NotBlank
     private String title;
 
 

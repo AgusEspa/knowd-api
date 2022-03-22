@@ -1,7 +1,6 @@
 package me.projects.knowd.entities;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
@@ -14,7 +13,6 @@ public class Relation {
     @Column(name = "relation_id")
     private Long id;
 
-    @NotBlank
     private String title;
 
     @NotNull
