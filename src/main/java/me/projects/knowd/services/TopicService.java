@@ -1,6 +1,7 @@
 package me.projects.knowd.services;
 
 import me.projects.knowd.dtos.requests.TopicRequest;
+import me.projects.knowd.dtos.responses.TopicResponse;
 import me.projects.knowd.entities.Subject;
 import me.projects.knowd.entities.Topic;
 import me.projects.knowd.entities.UserEntity;
@@ -15,6 +16,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TopicService {
@@ -34,7 +38,7 @@ public class TopicService {
         this.subjectRepository = subjectRepository;
     }
 
-    public void newTopic(Long subjectId, TopicRequest topicRequest) {
+    public TopicResponse newTopic(Long subjectId, TopicRequest topicRequest) {
         String username = getUsername();
         UserEntity user = userEntityRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
@@ -43,23 +47,26 @@ public class TopicService {
 
         Topic newTopic = new Topic(
                 topicRequest.getTitle(),
-                topicRequest.getProgress(),
-                topicRequest.getStatus(),
+                topicRequest.getIsDone(),
                 subject,
                 user);
         topicRepository.save(newTopic);
+
+        return new TopicResponse(newTopic.getId(), newTopic.getTitle(), newTopic.getIsDone());
     }
 
-    public void updateTopic(Long id, TopicRequest editedTopic) {
+    public TopicResponse updateTopic(Long id, TopicRequest editedTopic) {
 
         Topic fetchedTopic = validateUserAndFetchTopic(id);
 
         fetchedTopic.setTitle(editedTopic.getTitle());
-        fetchedTopic.setProgress(editedTopic.getProgress());
-        fetchedTopic.setStatus(editedTopic.getStatus());
+        fetchedTopic.setIsDone(editedTopic.getIsDone());
         fetchedTopic.setSubject(fetchedTopic.getSubject());
         fetchedTopic.setUser(fetchedTopic.getUser());
         topicRepository.save(fetchedTopic);
+
+        return new TopicResponse(fetchedTopic.getId(), fetchedTopic.getTitle(), fetchedTopic.getIsDone());
+
     }
 
     public void removeTopic(Long id) {

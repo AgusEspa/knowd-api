@@ -17,16 +17,10 @@ public class Topic {
     @Column(name = "topic_id")
     private Long id;
 
-    @NotBlank
     private String title;
 
     @NotNull
-    @Min(1)
-    @Max(100)
-    private int progress;
-
-    @NotBlank
-    private String status;
+    private boolean isDone;
 
     @NotNull
     @ManyToOne
@@ -41,10 +35,9 @@ public class Topic {
 
     public Topic() {}
 
-    public Topic(String title, int progress, String status, Subject subject, UserEntity user) {
+    public Topic(String title, boolean isDone, Subject subject, UserEntity user) {
         this.title = title;
-        this.progress = progress;
-        this.status = status;
+        this.isDone = isDone;
         this.subject = subject;
         this.user = user;
     }
@@ -66,20 +59,12 @@ public class Topic {
         this.title = title;
     }
 
-    public int getProgress() {
-        return progress;
+    public boolean getIsDone() {
+        return isDone;
     }
 
-    public void setProgress(int progress) {
-        this.progress = progress;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    public void setIsDone(boolean done) {
+        isDone = done;
     }
 
     public Subject getSubject() {

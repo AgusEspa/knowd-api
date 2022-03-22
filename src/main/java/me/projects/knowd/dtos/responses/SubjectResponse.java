@@ -26,10 +26,12 @@ public class SubjectResponse {
 
     private List<RelationResponse> relations;
 
+    private List<TopicResponse> topics;
+
 
     public SubjectResponse() {}
 
-    public SubjectResponse(Long id, String title, String field, String area, int relevance, int progress, String status, boolean needsAttention, LocalDate dueDate, List<RelationResponse> relations) {
+    public SubjectResponse(Long id, String title, String field, String area, int relevance, int progress, String status, boolean needsAttention, LocalDate dueDate, List<RelationResponse> relations, List<TopicResponse> topics) {
         this.id = id;
         this.title = title;
         this.field = field;
@@ -40,6 +42,7 @@ public class SubjectResponse {
         this.needsAttention = needsAttention;
         this.dueDate = dueDate;
         this.relations = relations;
+        this.topics = topics;
     }
 
 
@@ -121,6 +124,14 @@ public class SubjectResponse {
 
     public void setRelations(List<RelationResponse> relations) {
         this.relations = relations;
+    }
+
+    public List<TopicResponse> getTopics() {
+        return topics;
+    }
+
+    public void setTopics(List<TopicResponse> topics) {
+        this.topics = topics;
     }
 
     @Override

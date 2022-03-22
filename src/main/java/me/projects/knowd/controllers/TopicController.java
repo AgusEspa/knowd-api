@@ -2,10 +2,11 @@ package me.projects.knowd.controllers;
 
 
 import me.projects.knowd.dtos.requests.TopicRequest;
+import me.projects.knowd.dtos.responses.TopicResponse;
 import me.projects.knowd.services.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 
 
@@ -20,16 +21,14 @@ public class TopicController {
         this.topicService = topicService;
     }
 
-
     @PostMapping("/{subjectId}/topics")
-    void createTopic(@PathVariable Long subjectId, @Valid @RequestBody TopicRequest topicRequest) {
-        topicService.newTopic(subjectId, topicRequest);
-
+    ResponseEntity<TopicResponse> createTopic(@PathVariable Long subjectId, @Valid @RequestBody TopicRequest topicRequest) {
+        return ResponseEntity.ok(topicService.newTopic(subjectId, topicRequest));
     }
 
     @PutMapping("/topics/{id}")
-    void editTopic(@PathVariable Long id, @RequestBody TopicRequest editedTopic) {
-        topicService.updateTopic(id, editedTopic);
+    ResponseEntity<TopicResponse> editTopic(@PathVariable Long id, @RequestBody TopicRequest editedTopic) {
+        return ResponseEntity.ok(topicService.updateTopic(id, editedTopic));
     }
 
     @DeleteMapping("/topics/{id}")

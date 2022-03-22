@@ -3,14 +3,17 @@ package me.projects.knowd.services;
 import me.projects.knowd.dtos.requests.SubjectRequest;
 import me.projects.knowd.dtos.responses.RelationResponse;
 import me.projects.knowd.dtos.responses.SubjectResponse;
+import me.projects.knowd.dtos.responses.TopicResponse;
 import me.projects.knowd.entities.Relation;
 import me.projects.knowd.entities.Subject;
+import me.projects.knowd.entities.Topic;
 import me.projects.knowd.entities.UserEntity;
 import me.projects.knowd.exceptions.SubjectNotFoundException;
 import me.projects.knowd.exceptions.UserEntityNotFoundException;
 import me.projects.knowd.exceptions.UserNotAuthorizedException;
 import me.projects.knowd.repositories.RelationRepository;
 import me.projects.knowd.repositories.SubjectRepository;
+import me.projects.knowd.repositories.TopicRepository;
 import me.projects.knowd.repositories.UserEntityRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,14 +34,17 @@ public class SubjectService {
 
     private final RelationRepository relationRepository;
 
+    private final TopicRepository topicRepository;
+
     Logger logger = LoggerFactory.getLogger(SubjectService.class);
 
 
     @Autowired
-    public SubjectService(SubjectRepository subjectRepository, UserEntityRepository userEntityRepository, RelationRepository relationRepository) {
+    public SubjectService(SubjectRepository subjectRepository, UserEntityRepository userEntityRepository, RelationRepository relationRepository, TopicRepository topicRepository) {
         this.subjectRepository = subjectRepository;
         this.userEntityRepository = userEntityRepository;
         this.relationRepository = relationRepository;
+        this.topicRepository = topicRepository;
     }
 
     public List<SubjectResponse> fetchSubjects() {
@@ -52,6 +58,8 @@ public class SubjectService {
         List<Subject> fetchedSubject = subjectRepository.findByUserId(user.getId());
 
         List<Relation> fetchedRelations = relationRepository.findByUserId(user.getId());
+
+        List<Topic> fetchedTopics = topicRepository.findByUserId(user.getId());
 
         List<SubjectResponse> subjectResponseList = fetchedSubject.stream()
                 .map(subject -> new SubjectResponse(
@@ -67,6 +75,10 @@ public class SubjectService {
                         fetchedRelations.stream()
                                 .filter(relations -> relations.getSubject().getId().equals(subject.getId()))
                                 .map(relation -> new RelationResponse(relation.getId(), relation.getTitle()))
+                                .collect(Collectors.toList()),
+                        fetchedTopics.stream()
+                                .filter(topics -> topics.getSubject().getId().equals(subject.getId()))
+                                .map(topic -> new TopicResponse(topic.getId(), topic.getTitle(), topic.getIsDone()))
                                 .collect(Collectors.toList())))
                 .collect(Collectors.toList());
 
@@ -102,7 +114,9 @@ public class SubjectService {
                 newSubject.getStatus(),
                 newSubject.getNeedsAttention(),
                 newSubject.getDueDate(),
-                new ArrayList<RelationResponse>());
+                new ArrayList<RelationResponse>(),
+                new ArrayList<TopicResponse>());
+
     }
 
     public SubjectResponse updateSubject(Long id, SubjectRequest editedSubject) {
@@ -133,6 +147,9 @@ public class SubjectService {
                 fetchedSubject.getDueDate(),
                 fetchedSubject.getRelations().stream()
                         .map(relation -> new RelationResponse(relation.getId(), relation.getTitle()))
+                        .collect(Collectors.toList()),
+                fetchedSubject.getTopics().stream()
+                        .map(topic -> new TopicResponse(topic.getId(), topic.getTitle(), topic.getIsDone()))
                         .collect(Collectors.toList()));
     }
 

@@ -1,31 +1,19 @@
 package me.projects.knowd.dtos.requests;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class TopicRequest {
 
-    @NotBlank(message = "Title must not be empty")
     private String title;
 
-    @NotNull
-    @Min(value = 1, message = "Number must be more than 0")
-    @Max(value = 100, message = "Number must be less or equal to 100")
-    private int progress;
-
-    @NotNull(message = "Status must not be empty")
-    private String status;
+    private boolean isDone;
 
 
     public TopicRequest() {}
 
-    public TopicRequest(String title, int progress, String status) {
+    public TopicRequest(String title, boolean isDone) {
         this.title = title;
-        this.progress = progress;
-        this.status = status;
+        this.isDone = isDone;
     }
 
     public String getTitle() {
@@ -36,20 +24,12 @@ public class TopicRequest {
         this.title = title;
     }
 
-    public int getProgress() {
-        return progress;
+    public boolean getIsDone() {
+        return isDone;
     }
 
-    public void setProgress(int progress) {
-        this.progress = progress;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    public void setIsDone(boolean done) {
+        isDone = done;
     }
 
     @Override
@@ -57,11 +37,11 @@ public class TopicRequest {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TopicRequest that = (TopicRequest) o;
-        return progress == that.progress && Objects.equals(title, that.title) && status == that.status;
+        return Objects.equals(title, that.title);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, progress, status);
+        return Objects.hash(title);
     }
 }

@@ -8,18 +8,15 @@ public class TopicResponse {
 
     private String title;
 
-    private int progress;
-
-    private String status;
+    private boolean isDone;
 
 
     public TopicResponse() {}
 
-    public TopicResponse(Long id, String title, int progress, String status) {
+    public TopicResponse(Long id, String title, boolean isDone) {
         this.id = id;
         this.title = title;
-        this.progress = progress;
-        this.status = status;
+        this.isDone = isDone;
     }
 
 
@@ -39,22 +36,13 @@ public class TopicResponse {
         this.title = title;
     }
 
-    public int getProgress() {
-        return progress;
+    public boolean getIsDone() {
+        return isDone;
     }
 
-    public void setProgress(int progress) {
-        this.progress = progress;
+    public void setIsDone(boolean done) {
+        isDone = done;
     }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
 
     @Override
     public boolean equals(Object o) {
