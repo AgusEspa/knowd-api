@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.util.Map;
 
 
 @RestController
@@ -27,8 +28,13 @@ public class TopicController {
     }
 
     @PutMapping("/topics/{id}")
-    ResponseEntity<TopicResponse> editTopic(@PathVariable Long id, @RequestBody TopicRequest editedTopic) {
+    ResponseEntity<TopicResponse> replaceTopic(@PathVariable Long id, @RequestBody TopicRequest editedTopic) {
         return ResponseEntity.ok(topicService.updateTopic(id, editedTopic));
+    }
+
+    @PatchMapping("/topics/{id}")
+    ResponseEntity<TopicResponse> editTopic(@PathVariable Long id, @RequestBody Map<String, Object> changes) {
+        return ResponseEntity.ok(topicService.partiallyUpdateTopic(id, changes));
     }
 
     @DeleteMapping("/topics/{id}")

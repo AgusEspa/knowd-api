@@ -131,8 +131,6 @@ public class SubjectService {
         fetchedSubject.setStatus(editedSubject.getStatus());
         fetchedSubject.setNeedsAttention(editedSubject.getNeedsAttention());
         fetchedSubject.setDueDate(editedSubject.getDueDate());
-        fetchedSubject.setUser(fetchedSubject.getUser());
-
         subjectRepository.save(fetchedSubject);
 
         return new SubjectResponse(

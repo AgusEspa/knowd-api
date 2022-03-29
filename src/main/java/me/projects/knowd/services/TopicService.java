@@ -17,8 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 @Service
 public class TopicService {
@@ -61,18 +60,31 @@ public class TopicService {
 
         fetchedTopic.setTitle(editedTopic.getTitle());
         fetchedTopic.setIsDone(editedTopic.getIsDone());
-        fetchedTopic.setSubject(fetchedTopic.getSubject());
-        fetchedTopic.setUser(fetchedTopic.getUser());
         topicRepository.save(fetchedTopic);
 
         return new TopicResponse(fetchedTopic.getId(), fetchedTopic.getTitle(), fetchedTopic.getIsDone());
+    }
 
+    public TopicResponse partiallyUpdateTopic(Long id, Map<String, Object> changes) {
+
+        Topic fetchedTopic = validateUserAndFetchTopic(id);
+
+        changes.forEach(
+                (change, value) -> {
+                    switch (change){
+                        case "title": fetchedTopic.setTitle((String) value); break;
+                        case "isDone": fetchedTopic.setIsDone((Boolean) value); break;
+                    }
+                }
+        );
+        topicRepository.save(fetchedTopic);
+
+        return new TopicResponse(fetchedTopic.getId(), fetchedTopic.getTitle(), fetchedTopic.getIsDone());
     }
 
     public void removeTopic(Long id) {
         validateUserAndFetchTopic(id);
         topicRepository.deleteById(id);
-
     }
 
      protected Topic validateUserAndFetchTopic(Long id) {
@@ -89,5 +101,6 @@ public class TopicService {
     protected String getUsername() {
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
+
 
 }
