@@ -28,7 +28,7 @@ public class TopicController {
     }
 
     @PutMapping("/topics/{id}")
-    ResponseEntity<TopicResponse> replaceTopic(@PathVariable Long id, @RequestBody TopicRequest editedTopic) {
+    ResponseEntity<TopicResponse> replaceTopic(@PathVariable Long id, @Valid @RequestBody TopicRequest editedTopic) {
         return ResponseEntity.ok(topicService.updateTopic(id, editedTopic));
     }
 

@@ -1,14 +1,16 @@
 package me.projects.knowd.dtos.requests;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class RelationRequest {
 
+    @NotNull
     private String title;
 
-
-    public RelationRequest() {}
-
+    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
     public RelationRequest(String title) {
         this.title = title;
     }

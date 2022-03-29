@@ -5,9 +5,7 @@ import me.projects.knowd.dtos.responses.TopicResponse;
 import me.projects.knowd.entities.Subject;
 import me.projects.knowd.entities.Topic;
 import me.projects.knowd.entities.UserEntity;
-import me.projects.knowd.exceptions.TopicNotFoundException;
-import me.projects.knowd.exceptions.UserEntityNotFoundException;
-import me.projects.knowd.exceptions.UserNotAuthorizedException;
+import me.projects.knowd.exceptions.*;
 import me.projects.knowd.repositories.SubjectRepository;
 import me.projects.knowd.repositories.TopicRepository;
 import me.projects.knowd.repositories.UserEntityRepository;
@@ -16,8 +14,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 public class TopicService {
@@ -69,14 +74,19 @@ public class TopicService {
 
         Topic fetchedTopic = validateUserAndFetchTopic(id);
 
+        TopicRequest editedTopic = new TopicRequest(fetchedTopic.getTitle(), fetchedTopic.getIsDone());
+
         changes.forEach(
                 (change, value) -> {
                     switch (change){
-                        case "title": fetchedTopic.setTitle((String) value); break;
-                        case "isDone": fetchedTopic.setIsDone((Boolean) value); break;
+                        case "title": editedTopic.setTitle((String) value); break;
+                        case "isDone": editedTopic.setIsDone((Boolean) value); break;
                     }
                 }
         );
+
+        fetchedTopic.setTitle(editedTopic.getTitle());
+        fetchedTopic.setIsDone(editedTopic.getIsDone());
         topicRepository.save(fetchedTopic);
 
         return new TopicResponse(fetchedTopic.getId(), fetchedTopic.getTitle(), fetchedTopic.getIsDone());

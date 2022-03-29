@@ -7,8 +7,6 @@ public class ForgotPasswordRequest {
     @Email(message = "Not a valid email address")
     private String emailAddress;
 
-    public ForgotPasswordRequest() {
-    }
 
     public ForgotPasswordRequest(String emailAddress) {
         this.emailAddress = emailAddress;

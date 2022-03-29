@@ -13,6 +13,7 @@ public class Relation {
     @Column(name = "relation_id")
     private Long id;
 
+    @NotNull
     private String title;
 
     @NotNull
@@ -26,7 +27,7 @@ public class Relation {
     private UserEntity user;
 
 
-    public Relation() {}
+    Relation() {}
 
     public Relation(String title, Subject subject, UserEntity user) {
         this.title = title;

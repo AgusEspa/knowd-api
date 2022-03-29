@@ -1,17 +1,21 @@
 package me.projects.knowd.dtos.requests;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class TopicRequest {
 
+    @NotNull
     private String title;
 
-    private boolean isDone;
+    @NotNull
+    private Boolean isDone;
 
 
-    public TopicRequest() {}
-
-    public TopicRequest(String title, boolean isDone) {
+    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+    public TopicRequest(String title, Boolean isDone) {
         this.title = title;
         this.isDone = isDone;
     }
@@ -20,15 +24,16 @@ public class TopicRequest {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(@NotNull String title) {
         this.title = title;
     }
 
-    public boolean getIsDone() {
+    public Boolean getIsDone() {
         return isDone;
     }
 
-    public void setIsDone(boolean done) {
+    public void setIsDone(
+            @NotNull Boolean done) {
         isDone = done;
     }
 

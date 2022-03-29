@@ -14,6 +14,7 @@ public class Topic {
     @Column(name = "topic_id")
     private Long id;
 
+    @NotNull
     private String title;
 
     @NotNull
@@ -30,7 +31,7 @@ public class Topic {
     private UserEntity user;
 
 
-    public Topic() {}
+    Topic() {}
 
     public Topic(String title, boolean isDone, Subject subject, UserEntity user) {
         this.title = title;

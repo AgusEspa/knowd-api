@@ -4,13 +4,13 @@ import me.projects.knowd.exceptions.CustomMethodArgumentNotValidException;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class SubjectRequest {
 
+    @NotNull
     private String title;
 
     private String field;
@@ -30,12 +30,11 @@ public class SubjectRequest {
     @NotNull(message = "Status must not be empty")
     private String status;
 
+    @NotNull
     private boolean needsAttention;
 
     private LocalDate dueDate;
 
-
-    public SubjectRequest() {}
 
     public SubjectRequest(String title, String field, String area, int relevance, int progress, String status, boolean needsAttention, String dueDate) {
         this.title = title;

@@ -11,8 +11,6 @@ public class DeleteUserForm {
     @NotNull
     private String oldPassword;
 
-    public DeleteUserForm() {
-    }
 
     public DeleteUserForm(String emailAddress, String oldPassword) {
         this.emailAddress = emailAddress;

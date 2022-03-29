@@ -19,6 +19,7 @@ public class Subject {
     @Column(name = "subject_id")
     private Long id;
 
+    @NotNull
     private String title;
 
     private String field;
@@ -55,7 +56,7 @@ public class Subject {
     private Set<Relation> relations = new HashSet<>();
 
 
-    public Subject() {}
+    Subject() {}
 
     public Subject(String title, String field, String area, int relevance, int progress, String status, boolean needsAttention, LocalDate dueDate, UserEntity user) {
         this.title = title;

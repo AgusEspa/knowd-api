@@ -1,6 +1,6 @@
 package me.projects.knowd.dtos.requests;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 public class ResetPasswordRequest {
@@ -12,11 +12,9 @@ public class ResetPasswordRequest {
     )
     private String newPassword;
 
-    @NotNull
+    @NotBlank
     String passwordToken;
 
-    public ResetPasswordRequest() {
-    }
 
     public ResetPasswordRequest(String newPassword, String passwordToken) {
         this.newPassword = newPassword;
