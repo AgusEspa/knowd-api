@@ -74,7 +74,7 @@ public class TopicService {
         return new TopicResponse(fetchedTopic.getId(), fetchedTopic.getTitle(), fetchedTopic.getIsDone());
     }
 
-    public ResponseEntity<?> partiallyUpdateTopic(Long id, Map<String, Object> changes) throws NoSuchMethodException, MethodArgumentNotValidException {
+    public TopicResponse partiallyUpdateTopic(Long id, Map<String, Object> changes) throws NoSuchMethodException, MethodArgumentNotValidException {
 
         Topic fetchedTopic = validateUserAndFetchTopic(id);
 
@@ -123,12 +123,10 @@ public class TopicService {
         fetchedTopic.setIsDone(editedTopic.getIsDone());
         topicRepository.save(fetchedTopic);
 
-        return ResponseEntity.ok().body(
-                new TopicResponse(
+        return new TopicResponse(
                         fetchedTopic.getId(),
                         fetchedTopic.getTitle(),
                         fetchedTopic.getIsDone()
-                )
         );
     }
 

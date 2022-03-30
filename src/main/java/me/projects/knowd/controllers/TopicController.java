@@ -23,6 +23,7 @@ public class TopicController {
         this.topicService = topicService;
     }
 
+
     @PostMapping("/{subjectId}/topics")
     ResponseEntity<TopicResponse> createTopic(@PathVariable Long subjectId, @Valid @RequestBody TopicRequest topicRequest) {
         return ResponseEntity.ok(topicService.newTopic(subjectId, topicRequest));
@@ -34,8 +35,8 @@ public class TopicController {
     }
 
     @PatchMapping("/topics/{id}")
-    public ResponseEntity<?> editTopic(@PathVariable Long id, @RequestBody Map<String, Object> changes) throws NoSuchMethodException, MethodArgumentNotValidException {
-        return topicService.partiallyUpdateTopic(id, changes);
+    public ResponseEntity<TopicResponse> editTopic(@PathVariable Long id, @RequestBody Map<String, Object> changes) throws NoSuchMethodException, MethodArgumentNotValidException {
+        return ResponseEntity.ok(topicService.partiallyUpdateTopic(id, changes));
     }
 
     @DeleteMapping("/topics/{id}")
