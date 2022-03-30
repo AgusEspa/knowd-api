@@ -19,14 +19,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -76,7 +74,7 @@ public class TopicService {
         return new TopicResponse(fetchedTopic.getId(), fetchedTopic.getTitle(), fetchedTopic.getIsDone());
     }
 
-    public ResponseEntity<?> partiallyUpdateTopic(Long id, Map<String, Object> changes) {
+    public ResponseEntity<?> partiallyUpdateTopic(Long id, Map<String, Object> changes) throws NoSuchMethodException, MethodArgumentNotValidException {
 
         Topic fetchedTopic = validateUserAndFetchTopic(id);
 
@@ -84,9 +82,15 @@ public class TopicService {
 
         changes.forEach(
                 (change, value) -> {
-                    switch (change){
-                        case "title": editedTopic.setTitle((String) value); break;
-                        case "isDone": editedTopic.setIsDone((Boolean) value); break;
+                    switch (change) {
+                        case "title" -> editedTopic.setTitle((String) value);
+                        case "isDone" -> {
+                                try {
+                                    editedTopic.setIsDone((boolean) value);
+                                } catch (RuntimeException e) {
+                                    throw new CustomMethodArgumentNotValidException("Not a valid boolean value");
+                                }
+                        }
                     }
                 }
         );
@@ -96,27 +100,24 @@ public class TopicService {
         Set<ConstraintViolation<TopicRequest>> violations = validator.validate(editedTopic);
 
         if (!violations.isEmpty()) {
-            return ResponseEntity.badRequest().body(violations.toString());
-        }
 
-        // Tried to construct an Exception to avoid returning Entity directly
-        //
-//            BeanPropertyBindingResult result = new BeanPropertyBindingResult(editedTopic, "editedTopic");
-//            violations.forEach(error -> {
-//                result.addError(new ObjectError(error.getPropertyPath().toString(), error.getMessage()));
-//            });
-//
-//            Class[] carr = {Long.class, Map.class};
-//
-//            try {
-//                Method method = TopicController.class.getMethod("editTopic", carr);
-//
-//            throw new MethodArgumentNotValidException (
-//                    new MethodParameter(
-//                            method,
-//                            0),
-//                    result);
-//        }
+            BeanPropertyBindingResult result = new BeanPropertyBindingResult(editedTopic, "editedTopic");
+
+            violations.forEach(error -> {
+                FieldError fieldError = new FieldError("topicRequest", error.getPropertyPath().toString(), error.getMessage());
+                result.addError(fieldError);
+            });
+
+            Class[] carr = {Long.class, Map.class};
+
+            Method method = TopicController.class.getMethod("editTopic", carr);
+
+            throw new MethodArgumentNotValidException (
+                    new MethodParameter(
+                            method,
+                            0),
+                    result);
+        }
 
         fetchedTopic.setTitle(editedTopic.getTitle());
         fetchedTopic.setIsDone(editedTopic.getIsDone());

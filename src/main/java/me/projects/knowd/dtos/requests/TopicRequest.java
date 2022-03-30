@@ -11,11 +11,11 @@ public class TopicRequest {
     private String title;
 
     @NotNull
-    private Boolean isDone;
+    private boolean isDone;
 
 
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-    public TopicRequest(String title, Boolean isDone) {
+    public TopicRequest(String title, boolean isDone) {
         this.title = title;
         this.isDone = isDone;
     }
@@ -28,11 +28,11 @@ public class TopicRequest {
         this.title = title;
     }
 
-    public Boolean getIsDone() {
+    public boolean getIsDone() {
         return isDone;
     }
 
-    public void setIsDone(Boolean done) {
+    public void setIsDone(boolean done) {
         isDone = done;
     }
 

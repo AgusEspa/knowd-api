@@ -68,7 +68,6 @@ public class ExceptionsControllerAdvice {
             String message = error.getDefaultMessage();
             errors.put(fieldName, message);
         });
-        logger.info(ex.getParameter().toString());
         return new ResponseEntity<Map>(errors, HttpStatus.BAD_REQUEST);
     }
 

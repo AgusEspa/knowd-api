@@ -6,6 +6,7 @@ import me.projects.knowd.dtos.responses.TopicResponse;
 import me.projects.knowd.services.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.Map;
@@ -33,7 +34,7 @@ public class TopicController {
     }
 
     @PatchMapping("/topics/{id}")
-    ResponseEntity<?> editTopic(@PathVariable Long id, @RequestBody Map<String, Object> changes) {
+    public ResponseEntity<?> editTopic(@PathVariable Long id, @RequestBody Map<String, Object> changes) throws NoSuchMethodException, MethodArgumentNotValidException {
         return topicService.partiallyUpdateTopic(id, changes);
     }
 
