@@ -45,7 +45,7 @@ public class UserEntityController {
     }
 
     @PutMapping
-    ResponseEntity<UserResponse> editUser(@Valid @RequestBody EditUserForm editedUser) {
+    ResponseEntity<UserResponse> replaceUser(@Valid @RequestBody EditUserForm editedUser) {
         return ResponseEntity.ok(userEntityService.updateUser(editedUser));
     }
 
@@ -65,7 +65,7 @@ public class UserEntityController {
         userEntityService.sendPasswordToken(passwordToken, forgotPasswordRequest.getEmailAddress());
     }
 
-    @PutMapping("reset_password")
+    @PatchMapping("reset_password")
     ResponseEntity<UserResponse> resetPassword(@Valid @RequestBody ResetPasswordRequest resetPasswordRequest) {
         return ResponseEntity.ok(userEntityService.setNewPassword(resetPasswordRequest));
     }
