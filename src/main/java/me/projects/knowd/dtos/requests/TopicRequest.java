@@ -24,7 +24,7 @@ public class TopicRequest {
         return title;
     }
 
-    public void setTitle(@NotNull String title) {
+    public void setTitle(String title) {
         this.title = title;
     }
 
@@ -32,8 +32,7 @@ public class TopicRequest {
         return isDone;
     }
 
-    public void setIsDone(
-            @NotNull Boolean done) {
+    public void setIsDone(Boolean done) {
         isDone = done;
     }
 

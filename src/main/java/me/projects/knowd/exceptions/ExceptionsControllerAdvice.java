@@ -1,5 +1,8 @@
 package me.projects.knowd.exceptions;
 
+import me.projects.knowd.services.TopicService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -12,6 +15,8 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class ExceptionsControllerAdvice {
+
+    Logger logger = LoggerFactory.getLogger(TopicService.class);
 
     @ExceptionHandler(UserEntityNotFoundException.class)
     ResponseEntity<String> handleUserNotFoundException(UserEntityNotFoundException ex) {
@@ -63,6 +68,7 @@ public class ExceptionsControllerAdvice {
             String message = error.getDefaultMessage();
             errors.put(fieldName, message);
         });
+        logger.info(ex.getParameter().toString());
         return new ResponseEntity<Map>(errors, HttpStatus.BAD_REQUEST);
     }
 

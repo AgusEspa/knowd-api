@@ -1,5 +1,6 @@
 package me.projects.knowd.services;
 
+import me.projects.knowd.controllers.TopicController;
 import me.projects.knowd.dtos.requests.TopicRequest;
 import me.projects.knowd.dtos.responses.TopicResponse;
 import me.projects.knowd.entities.Subject;
@@ -12,14 +13,19 @@ import me.projects.knowd.repositories.UserEntityRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.MethodParameter;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -70,7 +76,7 @@ public class TopicService {
         return new TopicResponse(fetchedTopic.getId(), fetchedTopic.getTitle(), fetchedTopic.getIsDone());
     }
 
-    public TopicResponse partiallyUpdateTopic(Long id, Map<String, Object> changes) {
+    public ResponseEntity<?> partiallyUpdateTopic(Long id, Map<String, Object> changes) {
 
         Topic fetchedTopic = validateUserAndFetchTopic(id);
 
@@ -85,11 +91,44 @@ public class TopicService {
                 }
         );
 
+        Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+
+        Set<ConstraintViolation<TopicRequest>> violations = validator.validate(editedTopic);
+
+        if (!violations.isEmpty()) {
+            return ResponseEntity.badRequest().body(violations.toString());
+        }
+
+        // Tried to construct an Exception to avoid returning Entity directly
+        //
+//            BeanPropertyBindingResult result = new BeanPropertyBindingResult(editedTopic, "editedTopic");
+//            violations.forEach(error -> {
+//                result.addError(new ObjectError(error.getPropertyPath().toString(), error.getMessage()));
+//            });
+//
+//            Class[] carr = {Long.class, Map.class};
+//
+//            try {
+//                Method method = TopicController.class.getMethod("editTopic", carr);
+//
+//            throw new MethodArgumentNotValidException (
+//                    new MethodParameter(
+//                            method,
+//                            0),
+//                    result);
+//        }
+
         fetchedTopic.setTitle(editedTopic.getTitle());
         fetchedTopic.setIsDone(editedTopic.getIsDone());
         topicRepository.save(fetchedTopic);
 
-        return new TopicResponse(fetchedTopic.getId(), fetchedTopic.getTitle(), fetchedTopic.getIsDone());
+        return ResponseEntity.ok().body(
+                new TopicResponse(
+                        fetchedTopic.getId(),
+                        fetchedTopic.getTitle(),
+                        fetchedTopic.getIsDone()
+                )
+        );
     }
 
     public void removeTopic(Long id) {

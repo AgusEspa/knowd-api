@@ -33,8 +33,8 @@ public class TopicController {
     }
 
     @PatchMapping("/topics/{id}")
-    ResponseEntity<TopicResponse> editTopic(@PathVariable Long id, @RequestBody Map<String, Object> changes) {
-        return ResponseEntity.ok(topicService.partiallyUpdateTopic(id, changes));
+    ResponseEntity<?> editTopic(@PathVariable Long id, @RequestBody Map<String, Object> changes) {
+        return topicService.partiallyUpdateTopic(id, changes);
     }
 
     @DeleteMapping("/topics/{id}")
