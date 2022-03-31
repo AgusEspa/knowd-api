@@ -15,7 +15,6 @@ import me.projects.knowd.repositories.UserEntityRepository;
 import me.projects.knowd.dtos.requests.RegistrationForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,7 +31,6 @@ public class UserEntityService {
 
     Logger logger = LoggerFactory.getLogger(UserEntityService.class);
 
-    @Autowired
     public UserEntityService(UserEntityRepository userEntityRepository, EmailService emailService) {
         this.userEntityRepository = userEntityRepository;
         this.emailService = emailService;

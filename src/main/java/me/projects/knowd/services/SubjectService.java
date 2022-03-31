@@ -17,7 +17,6 @@ import me.projects.knowd.repositories.TopicRepository;
 import me.projects.knowd.repositories.UserEntityRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -38,8 +37,6 @@ public class SubjectService {
 
     Logger logger = LoggerFactory.getLogger(SubjectService.class);
 
-
-    @Autowired
     public SubjectService(SubjectRepository subjectRepository, UserEntityRepository userEntityRepository, RelationRepository relationRepository, TopicRepository topicRepository) {
         this.subjectRepository = subjectRepository;
         this.userEntityRepository = userEntityRepository;

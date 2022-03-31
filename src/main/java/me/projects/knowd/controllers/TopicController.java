@@ -4,7 +4,6 @@ package me.projects.knowd.controllers;
 import me.projects.knowd.dtos.requests.TopicRequest;
 import me.projects.knowd.dtos.responses.TopicResponse;
 import me.projects.knowd.services.TopicService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +17,6 @@ public class TopicController {
 
     private final TopicService topicService;
 
-    @Autowired
     public TopicController(TopicService topicService) {
         this.topicService = topicService;
     }

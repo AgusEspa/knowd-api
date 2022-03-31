@@ -12,9 +12,7 @@ import me.projects.knowd.repositories.TopicRepository;
 import me.projects.knowd.repositories.UserEntityRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BeanPropertyBindingResult;
@@ -39,7 +37,6 @@ public class TopicService {
 
     Logger logger = LoggerFactory.getLogger(TopicService.class);
 
-    @Autowired
     public TopicService(TopicRepository repository, UserEntityRepository userEntityRepository, SubjectRepository subjectRepository) {
         this.topicRepository = repository;
         this.userEntityRepository = userEntityRepository;

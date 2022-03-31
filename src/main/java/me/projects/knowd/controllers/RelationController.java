@@ -3,7 +3,6 @@ package me.projects.knowd.controllers;
 import me.projects.knowd.dtos.requests.RelationRequest;
 import me.projects.knowd.dtos.responses.RelationResponse;
 import me.projects.knowd.services.RelationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +13,6 @@ import javax.validation.Valid;
 public class RelationController {
 
     private final RelationService relationService;
-
-    @Autowired
 
     public RelationController(RelationService relationService) {
         this.relationService = relationService;
