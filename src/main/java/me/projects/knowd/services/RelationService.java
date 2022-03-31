@@ -13,7 +13,6 @@ import me.projects.knowd.repositories.SubjectRepository;
 import me.projects.knowd.repositories.UserEntityRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +28,6 @@ public class RelationService {
 
     Logger logger = LoggerFactory.getLogger(TopicService.class);
 
-    @Autowired
     public RelationService(RelationRepository relationRepository, UserEntityRepository userEntityRepository, SubjectRepository subjectRepository) {
         this.relationRepository = relationRepository;
         this.userEntityRepository = userEntityRepository;

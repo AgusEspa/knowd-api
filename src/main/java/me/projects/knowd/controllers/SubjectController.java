@@ -3,7 +3,6 @@ package me.projects.knowd.controllers;
 import me.projects.knowd.dtos.requests.SubjectRequest;
 import me.projects.knowd.dtos.responses.SubjectResponse;
 import me.projects.knowd.services.SubjectService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +15,6 @@ public class SubjectController {
 
     private final SubjectService subjectService;
 
-
-    @Autowired
     public SubjectController(SubjectService subjectService) {
         this.subjectService = subjectService;
     }

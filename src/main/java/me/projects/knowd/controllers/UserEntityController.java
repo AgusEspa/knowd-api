@@ -26,7 +26,6 @@ public class UserEntityController {
 
     Logger logger = LoggerFactory.getLogger(UserEntityController.class);
 
-    @Autowired
     public UserEntityController(UserEntityService userEntityService, TokenService tokenService) {
         this.userEntityService = userEntityService;
         this.tokenService = tokenService;
