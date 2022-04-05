@@ -20,7 +20,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
 import javax.validation.Validator;
 import java.lang.reflect.Method;
 import java.util.Map;
@@ -35,12 +34,15 @@ public class TopicService {
 
     private final SubjectRepository subjectRepository;
 
+    private final Validator validator;
+
     Logger logger = LoggerFactory.getLogger(TopicService.class);
 
-    public TopicService(TopicRepository repository, UserEntityRepository userEntityRepository, SubjectRepository subjectRepository) {
+    public TopicService(TopicRepository repository, UserEntityRepository userEntityRepository, SubjectRepository subjectRepository, Validator validator) {
         this.topicRepository = repository;
         this.userEntityRepository = userEntityRepository;
         this.subjectRepository = subjectRepository;
+        this.validator = validator;
     }
 
     public TopicResponse newTopic(Long subjectId, TopicRequest topicRequest) {
@@ -91,8 +93,6 @@ public class TopicService {
                     }
                 }
         );
-
-        Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
         Set<ConstraintViolation<TopicRequest>> violations = validator.validate(editedTopic);
 

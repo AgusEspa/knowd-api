@@ -16,7 +16,6 @@ import me.projects.knowd.dtos.requests.RegistrationForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,13 +26,14 @@ public class UserEntityService {
 
     private final EmailService emailService;
 
-    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final PasswordEncoder passwordEncoder;
 
     Logger logger = LoggerFactory.getLogger(UserEntityService.class);
 
-    public UserEntityService(UserEntityRepository userEntityRepository, EmailService emailService) {
+    public UserEntityService(UserEntityRepository userEntityRepository, EmailService emailService, PasswordEncoder passwordEncoder) {
         this.userEntityRepository = userEntityRepository;
         this.emailService = emailService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public UserCredentialsResponse fetchUserData() {
