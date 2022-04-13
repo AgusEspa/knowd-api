@@ -50,7 +50,8 @@ public class TopicService {
         UserEntity user = userEntityRepository.findByEmailAddress(username)
                 .orElseThrow(() -> new UserEntityNotFoundException(username));
 
-        Subject subject = subjectRepository.getById(subjectId);
+        Subject subject = subjectRepository.findById(subjectId)
+                .orElseThrow(() -> new SubjectNotFoundException(subjectId));
 
         Topic newTopic = new Topic(
                 topicRequest.getTitle(),
@@ -82,7 +83,13 @@ public class TopicService {
         changes.forEach(
                 (change, value) -> {
                     switch (change) {
-                        case "title" -> editedTopic.setTitle((String) value);
+                        case "title" -> {
+                            try {
+                                editedTopic.setTitle((String) value);
+                            } catch (Exception e) {
+                                throw new CustomMethodArgumentNotValidException("Not a valid title format");
+                            }
+                        }
                         case "isDone" -> {
                                 try {
                                     editedTopic.setIsDone((boolean) value);
