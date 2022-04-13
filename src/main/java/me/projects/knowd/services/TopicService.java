@@ -86,7 +86,7 @@ public class TopicService {
                         case "isDone" -> {
                                 try {
                                     editedTopic.setIsDone((boolean) value);
-                                } catch (RuntimeException e) {
+                                } catch (Exception e) {
                                     throw new CustomMethodArgumentNotValidException("Not a valid boolean value");
                                 }
                         }
