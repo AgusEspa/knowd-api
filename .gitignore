@@ -26,3 +26,5 @@ Entity Diagram.drawio
 .DS_Store
 /target/
 /.idea/
+
+*.env
