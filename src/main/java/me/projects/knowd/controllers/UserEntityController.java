@@ -7,7 +7,6 @@ import me.projects.knowd.security.TokenService;
 import me.projects.knowd.services.UserEntityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +21,7 @@ import java.io.IOException;
 public class UserEntityController {
 
     private final UserEntityService userEntityService;
+
     private final TokenService tokenService;
 
     Logger logger = LoggerFactory.getLogger(UserEntityController.class);
@@ -60,8 +60,7 @@ public class UserEntityController {
 
     @PostMapping("/sendPasswordReset")
     void getPasswordToken(@Valid @RequestBody ForgotPasswordRequest forgotPasswordRequest) {
-        String passwordToken = tokenService.generatePasswordToken(forgotPasswordRequest.getEmailAddress());
-        userEntityService.sendPasswordToken(passwordToken, forgotPasswordRequest.getEmailAddress());
+        userEntityService.sendPasswordToken(forgotPasswordRequest.getEmailAddress());
     }
 
     @PatchMapping("/reset_password")

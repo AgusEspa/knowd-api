@@ -13,8 +13,10 @@ import me.projects.knowd.entities.UserEntity;
 import me.projects.knowd.exceptions.*;
 import me.projects.knowd.repositories.UserEntityRepository;
 import me.projects.knowd.dtos.requests.RegistrationForm;
+import me.projects.knowd.security.TokenService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,14 +26,20 @@ public class UserEntityService {
 
     private final UserEntityRepository userEntityRepository;
 
+    private final TokenService tokenService;
+
     private final EmailService emailService;
 
     private final PasswordEncoder passwordEncoder;
 
     Logger logger = LoggerFactory.getLogger(UserEntityService.class);
 
-    public UserEntityService(UserEntityRepository userEntityRepository, EmailService emailService, PasswordEncoder passwordEncoder) {
+    @Value("${VIEW_BASE_URL}")
+    private String viewBaseUrl;
+
+    public UserEntityService(UserEntityRepository userEntityRepository, TokenService tokenService, EmailService emailService, PasswordEncoder passwordEncoder) {
         this.userEntityRepository = userEntityRepository;
+        this.tokenService = tokenService;
         this.emailService = emailService;
         this.passwordEncoder = passwordEncoder;
     }
@@ -100,8 +108,11 @@ public class UserEntityService {
 
     }
 
-    public void sendPasswordToken(String passwordToken, String emailAddress) {
-        String resetLink = "To set a new password, please follow this link or copy/paste it into your browser: " + "http://localhost:3000/reset_password?token=" + passwordToken;
+    public void sendPasswordToken(String emailAddress) {
+
+        String passwordToken = tokenService.generatePasswordToken(emailAddress);
+
+        String resetLink = "To set a new password, please follow this link or copy/paste it into your browser (it will expire in 10 minutes): " + viewBaseUrl + "/reset_password?token=" + passwordToken;
         emailService.sendEmail(emailAddress, "Knowd Help Desk <knowd.help@gmail.com>", "Password reset", resetLink);
         logger.info("Sending reset password token to " + emailAddress);
     }
