@@ -63,7 +63,7 @@ public class UserEntityController {
         userEntityService.sendPasswordToken(forgotPasswordRequest.getEmailAddress());
     }
 
-    @PatchMapping("/reset_password")
+    @PatchMapping("/password")
     ResponseEntity<UserResponse> resetPassword(@Valid @RequestBody ResetPasswordRequest resetPasswordRequest) {
         return ResponseEntity.ok(userEntityService.setNewPassword(resetPasswordRequest));
     }
