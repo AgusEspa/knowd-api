@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class APIController {
 
-    @GetMapping("/api/start")
-    ResponseEntity<?> getAPIStatus() {
+    @GetMapping("/api/status")
+    ResponseEntity<String> getAPIStatus() {
         return ResponseEntity.ok("Successful start up");
     }
 }

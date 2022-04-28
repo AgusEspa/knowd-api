@@ -1,5 +1,8 @@
 package me.projects.knowd.security;
 
+import me.projects.knowd.services.TopicService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Value("${VIEW_BASE_URL}")
     private String viewBaseUrl;
-
+    
     public SecurityConfig(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
         this.userDetailsService = userDetailsService;
         this.passwordEncoder = passwordEncoder;
