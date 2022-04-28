@@ -2,13 +2,8 @@
 
 FROM openjdk:17-oracle
 
-WORKDIR /app
+ARG JAR_FILE=target/*.jar
 
-COPY .mvn/ .mvn
-COPY mvnw pom.xml ./
+COPY ${JAR_FILE} app.jar
 
-RUN ./mvnw dependency:go-offline
-
-COPY src ./src
-
-CMD ["./mvnw", "spring-boot:run"]
+ENTRYPOINT ["java","-jar","/app.jar"]
