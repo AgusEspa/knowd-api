@@ -28,3 +28,4 @@ replay_pid*
 /target/
 /.idea/
 *.env
+gmailAPI_credentials.json
