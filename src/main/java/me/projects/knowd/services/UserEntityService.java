@@ -21,6 +21,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+
 @Service
 public class UserEntityService {
 
@@ -108,7 +110,7 @@ public class UserEntityService {
 
     }
 
-    public void sendPasswordToken(String emailAddress) {
+    public void sendPasswordToken(String emailAddress) throws IOException {
 
         String passwordToken = tokenService.generatePasswordToken(emailAddress);
 

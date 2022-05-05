@@ -59,7 +59,7 @@ public class UserEntityController {
     }
 
     @PostMapping("/sendPasswordReset")
-    void getPasswordToken(@Valid @RequestBody ForgotPasswordRequest forgotPasswordRequest) {
+    void getPasswordToken(@Valid @RequestBody ForgotPasswordRequest forgotPasswordRequest) throws IOException {
         userEntityService.sendPasswordToken(forgotPasswordRequest.getEmailAddress());
     }
 
