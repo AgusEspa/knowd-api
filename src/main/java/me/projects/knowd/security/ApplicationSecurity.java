@@ -22,7 +22,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 
     private UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${VIEW_BASE_URL}")
     private String viewBaseUrl;
 
-    public SecurityConfig(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+    public ApplicationSecurity(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
         this.userDetailsService = userDetailsService;
         this.passwordEncoder = passwordEncoder;
     }
