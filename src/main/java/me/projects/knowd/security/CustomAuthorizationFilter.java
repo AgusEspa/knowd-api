@@ -41,6 +41,10 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                     Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
                     JWTVerifier verifier = JWT.require(algorithm).build();
                     DecodedJWT decodedJWT = verifier.verify(token);
+
+                    // verify it's not revoqued
+                    // get tokens from revoqued table and search, or query directly??
+                    
                     String username = decodedJWT.getSubject();
                     String[] roles = decodedJWT.getClaim("roles").asArray(String.class);
                     Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
