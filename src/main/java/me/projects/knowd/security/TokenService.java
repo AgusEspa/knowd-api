@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -40,12 +41,12 @@ public class TokenService {
     }
 
     public boolean verifyTokenNotBlacklisted(String token) {
-        try {
-            Token fetchedToken = tokenRepository.findByString(token).get();
-        } catch (Exception e) {
+        List<Token> tokensFetched = tokenRepository.findAll();
+        for (Token tk : tokensFetched) {
+            if (tk.getTokenString().equals(token))
+                return false;
         }
-        if (token != null) return false;
-        else return true;
+        return true;
     }
 
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
