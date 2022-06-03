@@ -1,5 +1,7 @@
 package me.projects.knowd.security;
 
+import me.projects.knowd.entities.Token;
+
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -11,6 +13,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MimeTypeUtils;
+
+import ch.qos.logback.core.layout.EchoLayout;
+import me.projects.knowd.repositories.TokenRepository;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,9 +32,21 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 public class TokenService {
 
     private final UserDetailsService userDetailsService;
+    private final TokenRepository tokenRepository;
 
-    public TokenService(UserDetailsService userDetailsService) {
+    public TokenService(UserDetailsService userDetailsService, TokenRepository tokenRepository) {
         this.userDetailsService = userDetailsService;
+        this.tokenRepository = tokenRepository;
+    }
+
+    // revoqued token verification
+    public boolean verifyTokenNotBlacklisted(String token) {
+        try {
+        Token fetchedToken = tokenRepository.findByString(token);
+        catch (Exception e) {
+        }
+        if (token != null) return false;
+        else return true;
     }
 
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {

@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "revoqued_tokens")
-class Token {
+public class Token {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
