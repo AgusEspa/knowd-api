@@ -39,11 +39,10 @@ public class TokenService {
         this.tokenRepository = tokenRepository;
     }
 
-    // revoqued token verification
     public boolean verifyTokenNotBlacklisted(String token) {
         try {
-        Token fetchedToken = tokenRepository.findByString(token);
-        catch (Exception e) {
+            Token fetchedToken = tokenRepository.findByString(token).get();
+        } catch (Exception e) {
         }
         if (token != null) return false;
         else return true;

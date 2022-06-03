@@ -10,13 +10,14 @@ import java.util.Objects;
 @Entity
 @Table(name = "revoqued_tokens")
 public class Token {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "token_id")
     private Long id;
 
     @NotBlank
+    @Column(name = "token_string")
     String tokenString;
 
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
