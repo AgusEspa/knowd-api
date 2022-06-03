@@ -36,7 +36,7 @@ public class Token {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Token token = (Token) o;
+            Token token = (Token) o;
         return Objects.equals(tokenString, token.tokenString);
     }
 
