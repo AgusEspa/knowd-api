@@ -28,6 +28,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 public class CustomAuthorizationFilter extends OncePerRequestFilter {
 
+    // autowire Token Service
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 

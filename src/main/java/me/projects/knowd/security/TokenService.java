@@ -67,7 +67,6 @@ public class TokenService {
     }
 
     public String generatePasswordToken(String username) {
-
         UserDetails user = userDetailsService.loadUserByUsername(username);
         Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
 
