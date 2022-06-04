@@ -1,6 +1,7 @@
 package me.projects.knowd.security;
 
 import me.projects.knowd.entities.Token;
+import me.projects.knowd.exceptions.InvalidTokenException;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -14,7 +15,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MimeTypeUtils;
 
-import ch.qos.logback.core.layout.EchoLayout;
 import me.projects.knowd.repositories.TokenRepository;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,13 +40,12 @@ public class TokenService {
         this.tokenRepository = tokenRepository;
     }
 
-    public boolean verifyTokenNotBlacklisted(String token) {
+    public void verifyTokenNotBlacklisted(String token) {
         List<Token> tokensFetched = tokenRepository.findAll();
         for (Token tk : tokensFetched) {
             if (tk.getTokenString().equals(token))
-                return false;
+                throw new InvalidTokenException("Revoqued token");
         }
-        return true;
     }
 
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -57,6 +56,9 @@ public class TokenService {
                 Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
                 JWTVerifier verifier = JWT.require(algorithm).build();
                 DecodedJWT decodedJWT = verifier.verify(refresh_token);
+
+                verifyTokenNotBlacklisted(refresh_token);
+
                 String username = decodedJWT.getSubject();
                 UserDetails user = userDetailsService.loadUserByUsername(username);
                 String access_token = JWT.create()
