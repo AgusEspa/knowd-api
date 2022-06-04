@@ -20,6 +20,9 @@ public class Token {
     @Column(name = "token_string")
     String tokenString;
 
+    public Token() {
+    };
+
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
     public Token(String tokenString) {
         this.tokenString = tokenString;
