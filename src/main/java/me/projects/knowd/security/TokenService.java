@@ -44,7 +44,7 @@ public class TokenService {
         List<Token> tokensFetched = tokenRepository.findAll();
         for (Token tk : tokensFetched) {
             if (tk.getTokenString().equals(token))
-                throw new InvalidTokenException("Revoqued token");
+                throw new InvalidTokenException("Revoked token");
         }
     }
 

@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import java.util.Objects;
 
 @Entity
-@Table(name = "revoqued_tokens")
+@Table(name = "revoked_tokens")
 public class Token {
 
     @Id
