@@ -1,5 +1,8 @@
 package me.projects.knowd.security;
 
+import me.projects.knowd.entities.Token;
+import me.projects.knowd.exceptions.InvalidTokenException;
+
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -12,12 +15,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MimeTypeUtils;
 
+import me.projects.knowd.repositories.TokenRepository;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -27,9 +33,19 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 public class TokenService {
 
     private final UserDetailsService userDetailsService;
+    private final TokenRepository tokenRepository;
 
-    public TokenService(UserDetailsService userDetailsService) {
+    public TokenService(UserDetailsService userDetailsService, TokenRepository tokenRepository) {
         this.userDetailsService = userDetailsService;
+        this.tokenRepository = tokenRepository;
+    }
+
+    public void verifyTokenNotBlacklisted(String token) {
+        List<Token> tokensFetched = tokenRepository.findAll();
+        for (Token tk : tokensFetched) {
+            if (tk.getTokenString().equals(token))
+                throw new InvalidTokenException("Revoqued token");
+        }
     }
 
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -40,6 +56,9 @@ public class TokenService {
                 Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
                 JWTVerifier verifier = JWT.require(algorithm).build();
                 DecodedJWT decodedJWT = verifier.verify(refresh_token);
+
+                verifyTokenNotBlacklisted(refresh_token);
+
                 String username = decodedJWT.getSubject();
                 UserDetails user = userDetailsService.loadUserByUsername(username);
                 String access_token = JWT.create()
@@ -67,7 +86,6 @@ public class TokenService {
     }
 
     public String generatePasswordToken(String username) {
-
         UserDetails user = userDetailsService.loadUserByUsername(username);
         Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
 
