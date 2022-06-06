@@ -15,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,33 +32,40 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     }
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
+            throws AuthenticationException {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,
+                password);
 
         return authenticationManager.authenticate(authenticationToken);
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
+            Authentication authResult) throws IOException, ServletException {
 
-        SecurityUser authenticatedUser = (SecurityUser)authResult.getPrincipal();
+        SecurityUser authenticatedUser = (SecurityUser) authResult.getPrincipal();
         Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.HOUR, 1);
 
         String access_token = JWT.create()
                 .withSubject(authenticatedUser.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 1440 * 60 * 1000))
+                .withExpiresAt(cal.getTime())
                 .withClaim("roles", authenticatedUser.getAuthorities().stream()
                         .map(GrantedAuthority::getAuthority)
                         .collect(Collectors.toList()))
                 .sign(algorithm);
 
+        cal.add(Calendar.YEAR, 1);
         String refresh_token = JWT.create()
                 .withSubject(authenticatedUser.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 28800 * 60 * 1000))
+                .withExpiresAt(cal.getTime())
                 .sign(algorithm);
 
         Map<String, String> tokens = new HashMap<>();

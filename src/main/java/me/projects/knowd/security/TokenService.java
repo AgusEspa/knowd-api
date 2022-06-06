@@ -20,6 +20,7 @@ import me.projects.knowd.repositories.TokenRepository;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -66,11 +67,13 @@ public class TokenService {
 
                 verifyTokenNotBlacklisted(refresh_token);
 
+                Calendar cal = Calendar.getInstance();
+                cal.add(Calendar.HOUR, 1);
                 String username = decodedJWT.getSubject();
                 UserDetails user = userDetailsService.loadUserByUsername(username);
                 String access_token = JWT.create()
                         .withSubject(user.getUsername())
-                        .withExpiresAt(new Date(System.currentTimeMillis() + 1440 * 60 * 1000))
+                        .withExpiresAt(cal.getTime())
                         .withClaim("roles", user.getAuthorities().stream()
                                 .map(GrantedAuthority::getAuthority)
                                 .collect(Collectors.toList()))
