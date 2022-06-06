@@ -40,6 +40,13 @@ public class TokenService {
         this.tokenRepository = tokenRepository;
     }
 
+    public Token addTokenToBlacklist(Token token) {
+        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+        JWTVerifier verifier = JWT.require(algorithm).build();
+        verifier.verify(token.getTokenString());
+        return tokenRepository.save(token);
+    }
+
     public void verifyTokenNotBlacklisted(String token) {
         List<Token> tokensFetched = tokenRepository.findAll();
         for (Token tk : tokensFetched) {

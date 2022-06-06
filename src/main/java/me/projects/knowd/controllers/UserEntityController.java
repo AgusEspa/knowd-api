@@ -1,5 +1,7 @@
 package me.projects.knowd.controllers;
 
+import me.projects.knowd.entities.Token;
+
 import me.projects.knowd.dtos.requests.*;
 import me.projects.knowd.dtos.responses.UserCredentialsResponse;
 import me.projects.knowd.dtos.responses.UserResponse;
@@ -56,6 +58,11 @@ public class UserEntityController {
     @GetMapping("/token/refresh")
     void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         tokenService.refreshToken(request, response);
+    }
+
+    @PostMapping("/token/revoke")
+    ResponseEntity<Token> revokeToken(@RequestBody Token token) {
+        return ResponseEntity.ok(tokenService.addTokenToBlacklist(token));
     }
 
     @PostMapping("/sendPasswordReset")
