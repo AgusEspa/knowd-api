@@ -66,6 +66,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
                 .cors()
                 .and()
                 .authorizeRequests()
+                .mvcMatchers(HttpMethod.GET, "/actuator").permitAll()
                 .mvcMatchers(HttpMethod.POST, "/api/users/signup").permitAll()
                 .mvcMatchers(HttpMethod.GET, "/api/users/token/refresh").permitAll()
                 .mvcMatchers(HttpMethod.GET, "/api/status").permitAll()
